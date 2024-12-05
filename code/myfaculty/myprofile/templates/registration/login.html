@@ -1,0 +1,58 @@
+{% extends 'registration/base.html' %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+
+{% if form.errors %}
+<div class="alert alert-danger">
+  Δεν δώσατε σωστό συνδυασμό ονόματος χρήστη και συνθηματικού
+</div>
+{% endif %}
+
+{% if next %}
+    {% if user.is_authenticated %}
+    <div class="alert alert-danger">
+      Είστε ήδη συνδεδεμένος.
+    </div>
+
+    {% else %}
+    <div class="alert alert-primary">
+      Παρακαλούμε συνδεθείτε με τον λογαριασμό σας.
+    </div>
+
+    {% endif %}
+{% endif %}
+
+<form method="post" action="{% url 'login' %}">
+  {% csrf_token %}
+  <div class="container">
+    <div class="row justify-content-center">
+      <img src="{% static 'myprofile/images/logodit.png' %}" style="max-width:300px">
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-4">
+      <label class="login-label" for="id_username">{% trans 'Λογαριασμος: (χωρίς @hua.gr)' %}</label> <br>
+      <input type="text" name="username" autofocus autocapitalize="none" autocomplete="λογαριασμός" maxlength="150" required id="id_username" class="form-control login-form"> <br>
+      <label class="login-label" for="id_password">{% trans 'Συνθηματικό' %}</label>
+      <input id="id_password" name="password" autocomplete="ο κωδικός σας" required id="id_password"
+                     type="password" class="form-control login-form"> <br>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-sm-2 text-left">        
+         <input class="btn btn-primary" type="submit" value="{% trans 'Εισοδος' %}"> </input>
+      </div>
+      <div class="col-sm-2 text-right">        
+        <input class="btn btn-danger" type="submit" value="{% trans 'Ξέχασα τον κωδικό μου!' %}"> </input>
+     </div>
+      
+      </div>  
+    </div>  
+    <input type="hidden" name="next" value="{{ next }}">
+
+    </div>
+  </div>
+</form>
+
+
+{% endblock %}

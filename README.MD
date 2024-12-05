@@ -1,0 +1,27 @@
+## Before running the project we should give permissions to data/db
+```bash
+sudo chmod -R 755 ./data/db
+```
+
+
+# For the 1st time
+## Starting the project with docker-compose
+```bash
+docker-compose up --build
+```
+
+## After we have start the project we need to create a superuser for our database (in another terminal)
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
+
+# For the next times 
+## To start the project we can simply run
+```bash
+docker-compose up
+```
+
+## To delete docker containers and volumes
+```bash
+docker-compose down --volumes
+```

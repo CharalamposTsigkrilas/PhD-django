@@ -1,0 +1,11 @@
+<span class="navbar-text nav-link">
+    <a href='{% url 'theses:staff_list' %}'> Διπλωματικές </a>    
+    <a href='{% url 'leaves:staff_list_leaves' %}'> Άδειες </a>
+    <a href='{% url 'projects:staff_list_projects' %}'> Έργα </a>    
+    <a href='{% url 'curricula:staff_list_course' %}'> Μαθήματα </a>
+    {% if request.user.staffmember_set.all.0.is_internal %}
+    <a href='{% url 'timesheets:staff_list' %}'> Timesheets </a>
+    <a href='{% url 'myprofile:staff_list_associates' %}'> Συνεργάτες </a>
+    {% endif %}
+    <a href='{% url 'myprofile:logout' %}'> Έξοδος </a>  
+</span>
