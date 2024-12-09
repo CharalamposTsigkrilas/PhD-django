@@ -29,8 +29,8 @@ urlpatterns = [
     path('theses/', include('theses.urls')),      
     path('leaves/', include('leaves.urls')),
     path('curricula/', include('curricula.urls')),  
-    path("accounts/", include("django.contrib.auth.urls")) ,
-    
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("phds/", include("phds.urls")),
 ]
 
 

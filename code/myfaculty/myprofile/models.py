@@ -180,12 +180,4 @@ class Student(models.Model):
             return self.display_name
         else:
             return str(self.id)
-
     
-        
-        
-
-
-
-
-

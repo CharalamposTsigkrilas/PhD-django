@@ -67,7 +67,8 @@ INSTALLED_APPS = [
     'projects',
     'leaves',
     'timesheets',
-    'theses'
+    'theses',
+    'phds'
 ]
 
 REST_FRAMEWORK = {
