@@ -142,3 +142,8 @@ GitHub.sublime-settings
 !.vscode/launch.json 
 !.vscode/extensions.json 
 .history
+
+# Database data
+db.json
+code/myfaculty/db.json
+code/myfaculty/default.json
