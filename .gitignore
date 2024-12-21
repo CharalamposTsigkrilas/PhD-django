@@ -147,3 +147,6 @@ GitHub.sublime-settings
 db.json
 code/myfaculty/db.json
 code/myfaculty/default.json
+
+# Passwords file
+code/myfaculty/initialization.py

@@ -21,6 +21,11 @@ docker-compose exec web python manage.py createsuperuser
 docker-compose exec web python manage.py loaddata <datafile>
 ```
 
+## If we want to run any python file while the project is running (for example to set passwords for users)
+```bash
+docker-compose exec web python <filename>.py
+```
+
 
 # For the next times 
 ## To start the project we can simply run
