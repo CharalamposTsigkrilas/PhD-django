@@ -23,6 +23,11 @@ urlpatterns = [
     path('staffmember-autocomplete/', views.StaffMemberAutocomplete.as_view(), name='staffmember-autocomplete'),
     path('student-autocomplete/', views.StudentAutocomplete.as_view(), name='student-autocomplete'),
 
-
-
+    path('sec/phds', views.sec_list_phd_students.as_view(), name='sec_list_phd_students'),
+    path('sec/phd/<int:pk>', views.sec_edit_phd_student.as_view(), name='sec_edit_phd_student'),
+    path('sec/phd/<int:pk>/delete', views.sec_delete_phd_student, name='sec_delete_phd_student'),
+    path('sec/phd/new', views.sec_create_phd_student.as_view(), name='sec_create_phd_student'),
+    
+    path('staff/phds', views.staff_list_phd_students.as_view(), name='staff_list_phd_students'),
+    
 ]

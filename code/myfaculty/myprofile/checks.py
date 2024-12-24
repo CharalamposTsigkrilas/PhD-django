@@ -1,4 +1,4 @@
-from .models import StaffMember, Associate, Student
+from .models import StaffMember, Associate, Student, PhDStudent
 
 def is_staff_member(user):
     s = StaffMember.objects.filter(user = user)
@@ -20,4 +20,8 @@ def likely_student_username(user):
 
 def is_student(user):
     s = Student.objects.filter(user = user)
+    return s.count() == 1
+
+def is_phd_student(user):
+    s = PhDStudent.objects.filter(user = user)
     return s.count() == 1

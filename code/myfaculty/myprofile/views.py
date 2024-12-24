@@ -1,9 +1,10 @@
+from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import StaffMember, Associate, Student
-from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student
-from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted
+from .models import StaffMember, Associate, Student, PhDStudent
+from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student, is_phd_student
+from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhDStudentForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -66,8 +67,17 @@ def student_profile(request):
     
     return render(request, 'myprofile/studentprofile.html', context={'form' : form, 'thesis' : thesis})
 
-    
-    
+@login_required    
+def  phd_student_profile(request):
+    profile = PhDStudent.objects.get(user = request.user)
+    if request.method == 'POST':
+        form = PhDStudentForm(request.POST, instance = profile)
+        if form.is_valid():
+            form.save()
+            return redirect('myprofile:index')
+        else:
+            return render(request, 'myprofile/phdstudentprofile.html', context = {'form' : form})
+
 
 @login_required
 def index(request):
@@ -80,6 +90,8 @@ def index(request):
         return associate_profile(request)
     elif is_student(request.user):
         return student_profile(request)
+    elif is_phd_student(request.user):
+        return phd_student_profile(request)
     
     else:
         return render_anauthorized_staff(request)
@@ -234,4 +246,62 @@ class StudentAutocomplete(UserPassesTestMixin, LoginRequiredMixin, autocomplete.
         else:
             return [ [ e['UserName'], e['SurName'] + ' ' + e['FirstName'] + ' (' + e['UserName'] + ')' ] for e in entries ]
             #return [ [ e['UserName'], e['UserName'] ] for e in entries ]
-            
+
+
+
+
+# CRUD (Create, Read, Update, Delete) views for PhD Students
+
+
+# Secreatary can CRUD everything
+
+class sec_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
+    template_name = "myprofile/sec_list_phd_students.html"
+    context_object_name = "phdstudent"
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_queryset(self):
+        return PhDStudent.objects.all()
+    
+class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
+    model = PhDStudent
+    template_name = "myprofile/sec_edit_phd_student.html"
+    form_class = PhDStudentForm
+    success_url = reverse_lazy('myprofile:sec_list_phd_students')
+    
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+
+class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
+    model = PhDStudent
+    template_name = "myprofile/sec_edit_phd_student.html"
+    form_class = PhDStudentForm
+    success_url = reverse_lazy('myprofile:sec_list_phd_students')
+    
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+
+
+@login_required
+@user_passes_test(is_secreteriat)    
+def sec_delete_phd_student(pk):
+    obj = get_object_or_404(PhDStudent, pk)
+    obj.delete()
+    return redirect('myprofile:sec_list_phd_students')
+
+
+# Staff Members of a PhD student can only see (Read) the PhD's student data
+
+class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
+    template_name = "myprofile/staff_list_phd_students.html"
+    context_object_name = "phdstudent"
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_queryset(self):
+        staff_member = StaffMember.objects.get(user=self.request.user)
+        # Filter PhD students where the staff member is supervisor, member1, or member2
+        return PhDStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))

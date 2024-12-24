@@ -24,30 +24,32 @@
       <span class="navbar-text navbar-text-username">
         Εφαρμογή OneStop
       </span>
-     {% block navbar %}
-     {% if request.user.is_authenticated %}
-     {% if perms.myprofile.is_secreteriat %}
-     {% include 'myprofile/secnavbar.html' %}
-     {% elif request.user|is_staff_member %}
-     {% include 'myprofile/staffnavbar.html' %}
-     {% elif request.user|is_student %}
-     {% include 'myprofile/studentnavbar.html' %}     
-     {% endif %}
-     {% endif %}
-     {% endblock %}
-   </nav>
+      {% block navbar %}
+        {% if request.user.is_authenticated %}
+          {% if perms.myprofile.is_secreteriat %}
+            {% include 'myprofile/secnavbar.html' %}
+          {% elif request.user|is_staff_member %}
+            {% include 'myprofile/staffnavbar.html' %}
+          {% elif request.user|is_student %}
+            {% include 'myprofile/studentnavbar.html' %}
+          {% elif request.user|is_phd_student %} 
+            {% include 'myprofile/phdstudentnavbar.html' %}
+          {% endif %}
+        {% endif %}
+      {% endblock %}
+    </nav>
     
-  <div class="container features">
-    {% block messages %}
-    {% if msg %}
-    <div class="alert alert-danger" role="alert">    
-    {{msg}}
+    <div class="container features">
+      {% block messages %}
+        {% if msg %}
+        <div class="alert alert-danger" role="alert">    
+        {{msg}}
+        </div>
+        {% endif %}
+      {% endblock %}
+      {% block middle %}
+      {% endblock %}
     </div>
-    {% endif %}
-    {% endblock %}
-    {% block middle %}
-    {% endblock %}
-  </div>
 
-</body>
+  </body>
 </html>
