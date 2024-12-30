@@ -68,15 +68,18 @@ def student_profile(request):
     return render(request, 'myprofile/studentprofile.html', context={'form' : form, 'thesis' : thesis})
 
 @login_required    
-def  phd_student_profile(request):
-    profile = PhdStudent.objects.get(user = request.user)
+def phd_student_profile(request):
+    profile = get_object_or_404(PhdStudent, user=request.user)
     if request.method == 'POST':
-        form = PhdStudentForm(request.POST, instance = profile)
+        form = PhdStudentForm(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('myprofile:index')
         else:
-            return render(request, 'myprofile/phdstudentprofile.html', context = {'form' : form})
+            return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
+    else:
+        form = PhdStudentForm(instance=profile)
+        return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
 
 
 @login_required

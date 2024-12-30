@@ -1,5 +1,11 @@
 {% extends 'myprofile/page.html' %}
+{% load crispy_forms_tags %}
 
 {% block middle %}
-    <h1>PhD Student - Profile View</h1>
+
+<form method="post">
+    {% csrf_token %}
+    {% crispy form %}
+</form>
+
 {% endblock  %}
