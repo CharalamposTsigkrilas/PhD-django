@@ -1,5 +1,5 @@
 from django import forms
-from .models import StaffMember, Associate, Student, PhDStudent
+from .models import StaffMember, Associate, Student, PhdStudent
 from django.forms import ModelForm
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
@@ -257,9 +257,9 @@ class StudentFormRestricted(ModelForm):
             self.fields[k].disabled = True
 
 # Demo form for PhD Students - It will be changed in the future
-class PhDStudentForm(forms.ModelForm):
+class PhdStudentForm(forms.ModelForm):
     class Meta:
-        model = PhDStudent
+        model = PhdStudent
         fields = '__all__'
         labels = {
             'id_number': 'ID Number',

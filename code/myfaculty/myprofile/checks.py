@@ -1,4 +1,4 @@
-from .models import StaffMember, Associate, Student, PhDStudent
+from .models import StaffMember, Associate, Student, PhdStudent
 
 def is_staff_member(user):
     s = StaffMember.objects.filter(user = user)
@@ -23,5 +23,5 @@ def is_student(user):
     return s.count() == 1
 
 def is_phd_student(user):
-    s = PhDStudent.objects.filter(user = user)
+    s = PhdStudent.objects.filter(user = user)
     return s.count() == 1

@@ -181,7 +181,7 @@ class Student(models.Model):
         else:
             return str(self.id)
     
-class PhDStudent(models.Model):
+class PhdStudent(models.Model):
 
     username = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
@@ -207,9 +207,9 @@ class PhDStudent(models.Model):
     cv_en = models.TextField()
     scopus_id = models.CharField()
 
-    supervisor = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL)
-    member1 = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL)
-    member2 = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL)
+    supervisor = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL, related_name="supervised_students")
+    member1 = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL, related_name="committee_member1_students")
+    member2 = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL, related_name="committee_member2_students")
 
     def save(self, *args, **kwargs):
         self.display_name = self.given_name + ' ' + self.surname

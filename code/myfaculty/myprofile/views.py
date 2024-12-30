@@ -2,9 +2,9 @@ from django.db.models import Q
 from django.db.models.query import QuerySet
 from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
-from .models import StaffMember, Associate, Student, PhDStudent
+from .models import StaffMember, Associate, Student, PhdStudent
 from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student, is_phd_student
-from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhDStudentForm
+from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -69,9 +69,9 @@ def student_profile(request):
 
 @login_required    
 def  phd_student_profile(request):
-    profile = PhDStudent.objects.get(user = request.user)
+    profile = PhdStudent.objects.get(user = request.user)
     if request.method == 'POST':
-        form = PhDStudentForm(request.POST, instance = profile)
+        form = PhdStudentForm(request.POST, instance = profile)
         if form.is_valid():
             form.save()
             return redirect('myprofile:index')
@@ -263,21 +263,21 @@ class sec_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.Lis
         return is_secreteriat(self.request.user)
     
     def get_queryset(self):
-        return PhDStudent.objects.all()
+        return PhdStudent.objects.all()
     
 class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
-    model = PhDStudent
+    model = PhdStudent
     template_name = "myprofile/sec_edit_phd_student.html"
-    form_class = PhDStudentForm
+    form_class = PhdStudentForm
     success_url = reverse_lazy('myprofile:sec_list_phd_students')
     
     def test_func(self):
         return is_secreteriat(self.request.user)
 
 class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
-    model = PhDStudent
+    model = PhdStudent
     template_name = "myprofile/sec_edit_phd_student.html"
-    form_class = PhDStudentForm
+    form_class = PhdStudentForm
     success_url = reverse_lazy('myprofile:sec_list_phd_students')
     
     def test_func(self):
@@ -287,7 +287,7 @@ class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.Cr
 @login_required
 @user_passes_test(is_secreteriat)    
 def sec_delete_phd_student(pk):
-    obj = get_object_or_404(PhDStudent, pk)
+    obj = get_object_or_404(PhdStudent, pk)
     obj.delete()
     return redirect('myprofile:sec_list_phd_students')
 
@@ -304,4 +304,4 @@ class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.L
     def get_queryset(self):
         staff_member = StaffMember.objects.get(user=self.request.user)
         # Filter PhD students where the staff member is supervisor, member1, or member2
-        return PhDStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
+        return PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
