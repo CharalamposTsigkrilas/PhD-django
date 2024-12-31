@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import StaffMember, Associate, Student, PhdStudent
 from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student, is_phd_student
-from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm
+from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm, PhdStudentFormRestricted
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -71,14 +71,14 @@ def student_profile(request):
 def phd_student_profile(request):
     profile = get_object_or_404(PhdStudent, user=request.user)
     if request.method == 'POST':
-        form = PhdStudentForm(request.POST, instance=profile)
+        form = PhdStudentFormRestricted(request.POST, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('myprofile:index')
         else:
             return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
     else:
-        form = PhdStudentForm(instance=profile)
+        form = PhdStudentFormRestricted(instance=profile)
         return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
 
 
