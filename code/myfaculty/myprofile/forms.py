@@ -10,7 +10,7 @@ STUDENT_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'program', 'reg_num
 PHD_STUDENT_FIELDS_DISABLED = ['reg_num', 'email', 'given_name', 'surname', 'fathers_name', 'date_of_birth',
                                 'external_email', 'gender', 'mobile_phone', 'home_phone', 'home_address_street',
                                 'subject_gr', 'subject_en', 'inscription_date', 'inscription_ref', 'cv_gr', 'cv_en', 
-                                'scopus_id']
+                                'scopus_id', 'photo']
 
 LABELS =  {
             'email' : 'Ε-mail', 
@@ -49,7 +49,8 @@ LABELS =  {
             'inscription_ref' : 'Πληροφορίες Εγγραφής (Inscription Reference)',
             'cv_gr' : 'Βιογραφικό Σημείωμα (στα Ελληνικά)',
             'cv_en' : 'Βιογραφικό Σημείωμα (στα Αγγλικά)',
-            'scopus_id' : 'Αναγνωριστικό Scopus (Scopus ID)'
+            'scopus_id' : 'Αναγνωριστικό Scopus (Scopus ID)',
+            'photo': 'Φωτογραφία'
         }
 
 SEC_STAFF_MEMBER_LAYOUT = Layout(
@@ -355,4 +356,5 @@ class PhdStudentFormRestricted(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for k in PHD_STUDENT_FIELDS_DISABLED:
-            self.fields[k].disabled = True
+            if k != 'photo':
+                self.fields[k].disabled = True

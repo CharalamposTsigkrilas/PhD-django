@@ -71,7 +71,7 @@ def student_profile(request):
 def phd_student_profile(request):
     profile = get_object_or_404(PhdStudent, user=request.user)
     if request.method == 'POST':
-        form = PhdStudentFormRestricted(request.POST, instance=profile)
+        form = PhdStudentFormRestricted(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
             return redirect('myprofile:index')

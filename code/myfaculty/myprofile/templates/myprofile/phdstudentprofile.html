@@ -3,9 +3,18 @@
 
 {% block middle %}
 
-<form method="post">
-    {% csrf_token %}
-    {% crispy form %}
-</form>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        
+        {% if form.instance.photo %}
+            <div class="current-photo">
+                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px;">
+            </div>
+        {% endif %}
+        
+        {% crispy form %}
 
-{% endblock  %}
+        <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+
+{% endblock %}
