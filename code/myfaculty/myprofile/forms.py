@@ -7,6 +7,10 @@ from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
 STAFF_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'title']
 ASSOCIATE_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'seat_no', 'office_no']
 STUDENT_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'program', 'reg_num']
+PHD_STUDENT_FIELDS_DISABLED = ['reg_num', 'email', 'given_name', 'surname', 'fathers_name', 'date_of_birth',
+                                'external_email', 'gender', 'mobile_phone', 'home_phone', 'home_address_street',
+                                'subject_gr', 'subject_en', 'inscription_date', 'inscription_ref', 'cv_gr', 'cv_en', 
+                                'scopus_id']
 
 LABELS =  {
             'email' : 'Ε-mail', 
@@ -35,7 +39,17 @@ LABELS =  {
             'card_no' : 'Αριθμός Κάρτας',
             'program' : 'Πρόγραμμα Σπουδών',
             'reg_num' : 'Αριθμός Μητρώου',
-            'is_internal' : 'Είναι εσωτερικός;' 
+            'is_internal' : 'Είναι εσωτερικός;',
+
+            'external_email' : 'Εξωτερικό Ε-mail',
+            'gender' : 'Φύλο',
+            'subject_gr' : 'Τίτλος Διδακτορικής Διατριβής (στα Ελληνικά)',
+            'subject_en' : 'Τίτλος Διδακτορικής Διατριβής (στα Αγγλικά)',
+            'inscription_date' : 'Ημερμηνία εγγραφής',
+            'inscription_ref' : 'Πληροφορίες Εγγραφής (Inscription Reference)',
+            'cv_gr' : 'Βιογραφικό Σημείωμα (στα Ελληνικά)',
+            'cv_en' : 'Βιογραφικό Σημείωμα (στα Αγγλικά)',
+            'scopus_id' : 'Αναγνωριστικό Scopus (Scopus ID)'
         }
 
 SEC_STAFF_MEMBER_LAYOUT = Layout(
@@ -104,6 +118,7 @@ STAFF_MEMBER_LAYOUT = Layout(
                 Div(Field('title'),css_class = 'col-md-4'),
                 css_class="row"),            
             )
+
 ASSOCIATE_LAYOUT = Layout(
             Row(
                Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
@@ -189,6 +204,67 @@ SEC_ASSOCIATE_LAYOUT = Layout(
                 css_class="row"),
             )
 
+SEC_PHD_STUDENT_LAYOUT = Layout(
+            Row(
+               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+               css_class="row"),
+            Row(
+                Div(Field('reg_num'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('email'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('given_name'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('surname'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('fathers_name'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('date_of_birth'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('external_email'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('gender'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('mobile_phone'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('home_phone'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('home_address_street'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('subject_gr'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('subject_en'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('inscription_date'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('inscription_ref'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('cv_gr'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('cv_en'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('scopus_id'),css_class = 'col-md-4'),
+                css_class="row"),
+            )
+
 class StaffForm(ModelForm):
 
     class Meta:
@@ -256,51 +332,27 @@ class StudentFormRestricted(ModelForm):
         for k in STUDENT_FIELDS_DISABLED:
             self.fields[k].disabled = True
 
-# Demo form for PhD Students - It will be changed in the future
 class PhdStudentForm(forms.ModelForm):
+    
     class Meta:
+        fields = PHD_STUDENT_FIELDS_DISABLED
         model = PhdStudent
-        fields = '__all__'
-        labels = {
-            'id_number': 'ID Number',
-            'email': 'Email',
-            'given_name': 'Given Name',
-            'surname': 'Surname',
-            'fathers_name': "Father's Name",
-            'date_of_birth': 'Date of Birth',
-            'external_email': 'External Email',
-            'gender': 'Gender',
-            'mobile_phone': 'Mobile Phone',
-            'home_phone': 'Home Phone',
-            'home_address': 'Home Address',
-            'subject_gr': 'Subject (Greek)',
-            'subject_en': 'Subject (English)',
-            'inscription_date': 'Inscription Date',
-            'inscription_ref': 'Inscription Reference',
-            'photo': 'Photo',
-            'cv_gr': 'CV (Greek)',
-            'cv_en': 'CV (English)',
-            'scopus_id': 'Scopus ID',
-        }
-        widgets = {
-            'id_number': forms.TextInput(attrs={'placeholder': 'e.g. 12345678', 'class': 'form-control'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'e.g. example@example.com', 'class': 'form-control'}),
-            'given_name': forms.TextInput(attrs={'placeholder': 'e.g. John', 'class': 'form-control'}),
-            'surname': forms.TextInput(attrs={'placeholder': 'e.g. Doe', 'class': 'form-control'}),
-            'fathers_name': forms.TextInput(attrs={'placeholder': 'e.g. Michael', 'class': 'form-control'}),
-            'date_of_birth': forms.DateInput(attrs={'placeholder': 'e.g. 1990-01-01', 'class': 'form-control', 'type': 'date'}),
-            'external_email': forms.EmailInput(attrs={'placeholder': 'e.g. external@example.com', 'class': 'form-control'}),
-            'gender': forms.TextInput(attrs={'placeholder': 'e.g. Male/Female', 'class': 'form-control'}),
-            'mobile_phone': forms.TextInput(attrs={'placeholder': 'e.g. +123456789', 'class': 'form-control'}),
-            'home_phone': forms.TextInput(attrs={'placeholder': 'e.g. +123456789', 'class': 'form-control'}),
-            'home_address': forms.TextInput(attrs={'placeholder': 'e.g. 123 Main St', 'class': 'form-control'}),
-            'subject_gr': forms.TextInput(attrs={'placeholder': 'e.g. Πληροφορική', 'class': 'form-control'}),
-            'subject_en': forms.TextInput(attrs={'placeholder': 'e.g. Computer Science', 'class': 'form-control'}),
-            'inscription_date': forms.DateInput(attrs={'placeholder': 'e.g. 2023-09-01', 'class': 'form-control', 'type': 'date'}),
-            'inscription_ref': forms.TextInput(attrs={'placeholder': 'e.g. Ref123', 'class': 'form-control'}),
-            'photo': forms.FileInput(attrs={'class': 'form-control'}),
-            'cv_gr': forms.Textarea(attrs={'placeholder': 'Εισάγετε το βιογραφικό στα Ελληνικά', 'class': 'form-control', 'rows': 4}),
-            'cv_en': forms.Textarea(attrs={'placeholder': 'Enter the CV in English', 'class': 'form-control', 'rows': 4}),
-            'scopus_id': forms.TextInput(attrs={'placeholder': 'e.g. 12345678', 'class': 'form-control'}),
-        }
+        labels = LABELS
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
 
+        self.helper = FormHelper()
+        self.helper.layout = SEC_PHD_STUDENT_LAYOUT
+
+class PhdStudentFormRestricted(forms.ModelForm):
+    
+    class Meta:
+        fields = PHD_STUDENT_FIELDS_DISABLED
+        model = PhdStudent
+        labels = LABELS
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k in PHD_STUDENT_FIELDS_DISABLED:
+            self.fields[k].disabled = True

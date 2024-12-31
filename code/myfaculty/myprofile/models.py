@@ -187,7 +187,7 @@ class PhdStudent(models.Model):
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     display_name = models.CharField(max_length=200, null=True, blank=True)
 
-    id_number = models.CharField(max_length=70, null=True)
+    reg_num = models.CharField(max_length=70, null=True)
     email = models.EmailField(null=True)
     given_name = models.CharField(max_length=50)
     surname = models.CharField(max_length=70)
@@ -197,7 +197,7 @@ class PhdStudent(models.Model):
     gender = models.CharField()
     mobile_phone = models.CharField(max_length=30,blank=True, null=True)
     home_phone = models.CharField(max_length=30,blank=True, null=True)
-    home_address = models.CharField(max_length=70, null=True, blank=True)
+    home_address_street = models.CharField(max_length=70, null=True, blank=True)
     subject_gr = models.CharField()
     subject_en = models.CharField()
     inscription_date = models.DateField()
