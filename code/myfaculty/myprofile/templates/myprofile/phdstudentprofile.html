@@ -3,6 +3,10 @@
 
 {% block middle %}
 
+    {% if form %}
+        <h1>Στοιχεία Προφίλ</h1>
+    {% endif %} 
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
@@ -16,5 +20,14 @@
 
         <button type="submit" class="btn btn-primary">Save</button>
     </form>
+
+    {% if form.instance.supervisor %}
+        <p></p>
+        <div>
+            <p> Επιβλέπων: {{  form.instance.supervisor.display_name }}</p>
+            <p> Μέλος 1: {{  form.instance.member1.display_name }}</p>
+            <p> Μέλος 2: {{  form.instance.member2.display_name }}</p>
+        </div>
+    {% endif %}
 
 {% endblock %}
