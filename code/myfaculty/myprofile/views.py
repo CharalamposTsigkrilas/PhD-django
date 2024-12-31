@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import StaffMember, Associate, Student, PhdStudent
 from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student, is_phd_student
-from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm, PhdStudentFormRestricted
+from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm, PhdStudentFormRestricted, PhdStudentFormRestrictedForStaff
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -260,7 +260,7 @@ class StudentAutocomplete(UserPassesTestMixin, LoginRequiredMixin, autocomplete.
 
 class sec_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
     template_name = "myprofile/sec_list_phd_students.html"
-    context_object_name = "phdstudent"
+    context_object_name = "phdstudents"
 
     def test_func(self):
         return is_secreteriat(self.request.user)
@@ -299,7 +299,7 @@ def sec_delete_phd_student(pk):
 
 class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
     template_name = "myprofile/staff_list_phd_students.html"
-    context_object_name = "phdstudent"
+    context_object_name = "phdstudents"
 
     def test_func(self):
         return is_staff_member(self.request.user)
@@ -308,3 +308,19 @@ class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.L
         staff_member = StaffMember.objects.get(user=self.request.user)
         # Filter PhD students where the staff member is supervisor, member1, or member2
         return PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
+
+
+class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):
+    model = PhdStudent
+    template_name = "myprofile/staff_spectate_phd_student.html"
+    # form_class = PhdStudentFormRestrictedForStaff
+    context_object_name = "phdstudent"
+    
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Optionally, you can pass a form if you want editable fields or related functionality
+        context['form'] = PhdStudentFormRestrictedForStaff(instance=self.object) 
+        return context

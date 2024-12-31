@@ -333,7 +333,7 @@ class StudentFormRestricted(ModelForm):
         for k in STUDENT_FIELDS_DISABLED:
             self.fields[k].disabled = True
 
-class PhdStudentForm(forms.ModelForm):
+class PhdStudentForm(ModelForm):
     
     class Meta:
         fields = PHD_STUDENT_FIELDS_DISABLED
@@ -346,7 +346,7 @@ class PhdStudentForm(forms.ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_PHD_STUDENT_LAYOUT
 
-class PhdStudentFormRestricted(forms.ModelForm):
+class PhdStudentFormRestricted(ModelForm):
     
     class Meta:
         fields = PHD_STUDENT_FIELDS_DISABLED
@@ -357,4 +357,16 @@ class PhdStudentFormRestricted(forms.ModelForm):
         super().__init__(*args, **kwargs)
         for k in PHD_STUDENT_FIELDS_DISABLED:
             if k != 'photo':
+                self.fields[k].disabled = True
+
+class PhdStudentFormRestrictedForStaff(ModelForm):
+    
+    class Meta:
+        fields = PHD_STUDENT_FIELDS_DISABLED
+        model = PhdStudent
+        labels = LABELS
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for k in PHD_STUDENT_FIELDS_DISABLED:
                 self.fields[k].disabled = True

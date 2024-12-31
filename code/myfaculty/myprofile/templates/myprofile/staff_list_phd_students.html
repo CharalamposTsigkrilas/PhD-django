@@ -1,5 +1,41 @@
 {% extends 'myprofile/page.html' %}
 
 {% block middle %}
-    <h1>Staff Member - List their PhD Students View</h1>
+    <script>
+        $(document).ready(function() {
+            $('#phdstudent').DataTable({
+                "lengthChange": false,
+                "pageLength": 100
+            });
+        });
+    </script>
+    <div class="row">
+        <div class="col">
+            <h3>Διδάκτορες</h3>
+        </div>
+    </div>
+    {% if phdstudents %}
+        <table id = "phdstudent" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Όνοματεπώνυμο</th>
+                    <th scope="col">Email</th>       
+                    <th scope="col"></th> 
+                </tr>
+            </thead>
+            <tbody>
+                {% for phd in phdstudents %}
+                    <tr>
+                        <td>{{ phd.display_name }}</td>
+                        <td>{{ phd.email }}</td>
+                        <td>
+                            <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Δεν έχουν καταχωρηθεί διδάκτoρες</p>
+    {% endif %} 
 {% endblock  %}

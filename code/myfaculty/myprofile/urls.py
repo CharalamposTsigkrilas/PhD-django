@@ -29,5 +29,6 @@ urlpatterns = [
     path('sec/phd/new', views.sec_create_phd_student.as_view(), name='sec_create_phd_student'),
     
     path('staff/phds', views.staff_list_phd_students.as_view(), name='staff_list_phd_students'),
+    path('staff/phd/<int:pk>/details', views.staff_spectate_phd_student.as_view(), name='staff_spectate_phd_student'),
     
 ]
