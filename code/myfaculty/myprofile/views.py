@@ -284,8 +284,8 @@ class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.Cr
 
 @login_required
 @user_passes_test(is_secreteriat)    
-def sec_delete_phd_student(pk):
-    obj = get_object_or_404(PhdStudent, pk)
+def sec_delete_phd_student(request, pk):
+    obj = get_object_or_404(PhdStudent, pk=pk)
     obj.delete()
     return redirect('myprofile:sec_list_phd_students')
 
