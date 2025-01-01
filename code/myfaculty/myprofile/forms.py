@@ -10,7 +10,7 @@ STUDENT_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'program', 'reg_num
 PHD_STUDENT_FIELDS_DISABLED = ['reg_num', 'email', 'given_name', 'surname', 'fathers_name', 'date_of_birth',
                                 'external_email', 'gender', 'mobile_phone', 'home_phone', 'home_address_street',
                                 'subject_gr', 'subject_en', 'inscription_date', 'inscription_ref', 'cv_gr', 'cv_en', 
-                                'scopus_id', 'photo']
+                                'scopus_id', 'supervisor', 'member1', 'member2', 'photo']
 
 LABELS =  {
             'email' : 'Ε-mail', 
@@ -50,7 +50,10 @@ LABELS =  {
             'cv_gr' : 'Βιογραφικό Σημείωμα (στα Ελληνικά)',
             'cv_en' : 'Βιογραφικό Σημείωμα (στα Αγγλικά)',
             'scopus_id' : 'Αναγνωριστικό Scopus (Scopus ID)',
-            'photo': 'Φωτογραφία'
+            'supervisor' : 'Επιβλέπων',
+            'member1' : 'Μέλος 1',
+            'member2' : 'Μέλος 2',
+            'photo' : 'Φωτογραφία'
         }
 
 SEC_STAFF_MEMBER_LAYOUT = Layout(
@@ -263,6 +266,15 @@ SEC_PHD_STUDENT_LAYOUT = Layout(
                 css_class="row"),
             Row(
                 Div(Field('scopus_id'),css_class = 'col-md-4'),
+                css_class="row"),            
+            Row(
+                Div(Field('supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('member1'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('member2'), css_class='col-md-4'),
                 css_class="row"),
             Row(
                 Div(Field('photo'), css_class='col-md-4'),

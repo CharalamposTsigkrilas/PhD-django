@@ -18,13 +18,4 @@
         {% endif %}
     </form>
 
-    {% if form.instance.supervisor %}
-        <p></p>
-        <div>
-            <p> Επιβλέπων: {{  form.instance.supervisor.display_name }}</p>
-            <p> Μέλος 1: {{  form.instance.member1.display_name }}</p>
-            <p> Μέλος 2: {{  form.instance.member2.display_name }}</p>
-        </div>
-    {% endif %}
-
 {% endblock %}
