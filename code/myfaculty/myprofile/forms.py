@@ -264,6 +264,9 @@ SEC_PHD_STUDENT_LAYOUT = Layout(
             Row(
                 Div(Field('scopus_id'),css_class = 'col-md-4'),
                 css_class="row"),
+            Row(
+                Div(Field('photo'), css_class='col-md-4'),
+                css_class="row"),
             )
 
 class StaffForm(ModelForm):
@@ -346,7 +349,7 @@ class PhdStudentForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_PHD_STUDENT_LAYOUT
 
-class PhdStudentFormRestricted(ModelForm):
+class PhdStudentFormRestricted(PhdStudentForm):
     
     class Meta:
         fields = PHD_STUDENT_FIELDS_DISABLED

@@ -10,6 +10,12 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}        
         {% crispy form %}
+        {% if form.instance.photo %}
+            <div class="current-photo">
+                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px; float: left;">
+                <div style="clear: both;"></div>
+            </div>
+        {% endif %}
     </form>
 
     {% if form.instance.supervisor %}

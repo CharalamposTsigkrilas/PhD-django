@@ -67,20 +67,14 @@ def student_profile(request):
     
     return render(request, 'myprofile/studentprofile.html', context={'form' : form, 'thesis' : thesis})
 
-@login_required    
-def phd_student_profile(request):
-    profile = get_object_or_404(PhdStudent, user=request.user)
-    if request.method == 'POST':
-        form = PhdStudentFormRestricted(request.POST, request.FILES, instance=profile)
-        if form.is_valid():
-            form.save()
-            return redirect('myprofile:index')
-        else:
-            return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
-    else:
-        form = PhdStudentFormRestricted(instance=profile)
-        return render(request, 'myprofile/phdstudentprofile.html', {'form': form})
+class PhdStudentProfileView(LoginRequiredMixin, generic.UpdateView):
+    model = PhdStudent
+    template_name = "myprofile/phdstudentprofile.html"
+    form_class = PhdStudentFormRestricted
+    success_url = reverse_lazy('myprofile:index')
 
+    def get_object(self, queryset=None):
+        return get_object_or_404(PhdStudent, user=self.request.user)
 
 @login_required
 def index(request):
@@ -94,7 +88,8 @@ def index(request):
     elif is_student(request.user):
         return student_profile(request)
     elif is_phd_student(request.user):
-        return phd_student_profile(request)
+        # return phd_student_profile(request)
+        return PhdStudentProfileView.as_view()(request)
     
     else:
         return render_anauthorized_staff(request)
@@ -306,14 +301,12 @@ class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.L
     
     def get_queryset(self):
         staff_member = StaffMember.objects.get(user=self.request.user)
-        # Filter PhD students where the staff member is supervisor, member1, or member2
         return PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
 
 
 class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):
     model = PhdStudent
     template_name = "myprofile/staff_spectate_phd_student.html"
-    # form_class = PhdStudentFormRestrictedForStaff
     context_object_name = "phdstudent"
     
     def test_func(self):
@@ -321,6 +314,5 @@ class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generi
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Optionally, you can pass a form if you want editable fields or related functionality
         context['form'] = PhdStudentFormRestrictedForStaff(instance=self.object) 
         return context

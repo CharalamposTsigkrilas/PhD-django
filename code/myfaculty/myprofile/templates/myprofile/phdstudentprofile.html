@@ -3,22 +3,17 @@
 
 {% block middle %}
 
-    {% if form %}
-        <h1>Στοιχεία Προφίλ</h1>
-    {% endif %} 
-
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
-        {% if form.instance.photo %}
-            <div class="current-photo">
-                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px;">
-            </div>
-        {% endif %}
-        
         {% crispy form %}
 
-        <button type="submit" class="btn btn-primary">Save</button>
+        {% if form.instance.photo %}
+            <div class="current-photo">
+                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px; float: left;">
+                <div style="clear: both;"></div>
+            </div>
+        {% endif %}
     </form>
 
     {% if form.instance.supervisor %}
