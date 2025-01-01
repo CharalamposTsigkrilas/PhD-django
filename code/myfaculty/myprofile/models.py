@@ -183,7 +183,6 @@ class Student(models.Model):
     
 class PhdStudent(models.Model):
 
-    username = models.CharField(max_length=50)
     user = models.ForeignKey(User, on_delete=models.SET_NULL, blank=True, null=True)
     display_name = models.CharField(max_length=200, null=True, blank=True)
 
@@ -216,6 +215,10 @@ class PhdStudent(models.Model):
         if not self.id:
             user = create_user_if_required(self.email)
             if user:
+                # user password mustn't be the same as username. Here we do it for easier registration.
+                user.set_password(user.username)
+                user.is_active = True
+                user.save()
                 self.user = user                
         super().save(*args, **kwargs)
 
