@@ -306,7 +306,7 @@ class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.L
 
 class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):
     model = PhdStudent
-    template_name = "myprofile/staff_spectate_phd_student.html"
+    template_name = "myprofile/phdstudentprofile.html"
     context_object_name = "phdstudent"
     
     def test_func(self):
