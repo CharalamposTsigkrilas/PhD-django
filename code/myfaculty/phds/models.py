@@ -3,12 +3,12 @@ from myprofile.models import StaffMember, PhdStudent
 from curricula.models import Course
 # Create your models here.
 
-class Journal(models.Model):
+class JournalPublication(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
 
     title = models.TextField()
-    authorsList = models.TextField()
-    hasSupervisor = models.BooleanField()
+    authors_list = models.TextField()
+    has_supervisor = models.BooleanField()
     journal = models.CharField()
     publisher = models.CharField()
     volume = models.CharField()
@@ -16,32 +16,39 @@ class Journal(models.Model):
     year = models.IntegerField()
     doi = models.CharField()
 
-class Conferense(models.Model):
+class ConferencePublication(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
 
-    ttitle = models.TextField()
-    authorsList = models.TextField()	
-    conferenceName = models.CharField()	
+    title = models.TextField()
+    authors_list = models.TextField()	
+    conference_name = models.CharField()	
     venue = models.CharField()
     year = models.IntegerField()
-    hasSupervisor = models.BooleanField()
+    has_supervisor = models.BooleanField()
 
 class Teaching(models.Model):
+
+    THEORY_LECTURE = "Theory Lecture"
+    LABORATORY_COURSE = "Laboratory Course"
+    ASSIGNMENT_CORRECTION = "Assignment Correction"
+    TUTORIAL_COURSE = "Tutorial Course"
+
+    TEACHING_TYPES = [
+        (THEORY_LECTURE, "Διάλεξη Θεωρίας"),
+        (LABORATORY_COURSE, "Εργαστηριακό Μάθημα"),
+        (ASSIGNMENT_CORRECTION, "Διόρθωση Εργασίας"),
+        (TUTORIAL_COURSE, "Φροντιστηριακό Μάθημα"),
+    ]
+
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
     faculty = models.ForeignKey(StaffMember, null=True, on_delete=models.SET_NULL)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
-
     year = models.IntegerField()
-    teachingType = {
-        THEORY_LECTURE : "Διάλεξη Θεωρίας",
-        LABORATORY_COURSE : "Εργαστηριακό Μάθημα",
-        ASSIGNMENT_CORRECTION : "Διόρθωση Εργασίας",
-        TUTORIAL_COURSE : "Φροντιστηριακό Μάθημα"
-    } 
-    hoursPerWeek = models.IntegerField()	
-    noWeeks = models.IntegerField()	
-    haveContract = models.BooleanField()
+    teaching_type = models.CharField(max_length=50, choices=TEACHING_TYPES)
+    hours_per_week = models.IntegerField()	
+    no_weeks = models.IntegerField()	
+    have_contract = models.BooleanField()
     comments = models.TextField()
 
-    approvedByFaculty = models.BooleanField()
-    approvedDate = models.DateField()
+    approved_by_faculty = models.BooleanField()
+    approved_date = models.DateField()
