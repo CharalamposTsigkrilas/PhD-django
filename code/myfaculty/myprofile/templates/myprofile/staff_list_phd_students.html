@@ -20,7 +20,9 @@
                 <tr>
                     <th scope="col">Όνοματεπώνυμο</th>
                     <th scope="col">Email</th>       
-                    <th scope="col"></th> 
+                    <th scope="col"></th>
+                    <th scope="col">Δημοσιεύσεις</th>
+                    <th scope="col">Επικουρικά Έργα</th>
                 </tr>
             </thead>
             <tbody>
@@ -30,6 +32,13 @@
                         <td>{{ phd.email }}</td>
                         <td>
                             <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                        </td>
+                        <td>
+                            <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
+                            <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
+                        </td>
+                        <td>
+                            <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
                         </td>
                     </tr>
                 {% endfor %}
