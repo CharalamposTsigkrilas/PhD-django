@@ -30,6 +30,7 @@ urlpatterns = [
     path('leaves/', include('leaves.urls')),
     path('curricula/', include('curricula.urls')),  
     path("accounts/", include("django.contrib.auth.urls")),
+    path("phds/", include("phds.urls")),
 ]
 
 
