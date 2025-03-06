@@ -37,11 +37,11 @@
                             <a href="{% url 'myprofile:sec_edit_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                         </td>
                         <td>
-                            <a href="{% url 'myprofile:sec_edit_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
-                            <a href="{% url 'myprofile:sec_edit_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
+                            <a href="{% url 'phds:sec_list_journals' %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
+                            <a href="{% url 'phds:sec_list_conferences' %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
                         </td>
                         <td>
-                            <a href="{% url 'myprofile:sec_edit_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
+                            <a href="{% url 'phds:sec_list_teachings' %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
                         </td>
                     </tr>
                 {% endfor %}

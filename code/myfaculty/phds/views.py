@@ -1,7 +1,10 @@
 from django.shortcuts import render
-
+from django.db.models import Q
+from .models import JournalPublication, ConferencePublication, Teaching
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
+from myprofile.checks import is_phd_student, is_secreteriat, is_staff_member
+from myprofile.models import StaffMember, PhdStudent
 
 # Create your views here.
 
@@ -11,8 +14,15 @@ from django.views import generic
     # Journals
 
 class phd_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):   
-    def dummy():
-        return
+    template_name = "phds/phd_list_journals.html"
+    context_object_name = "journals"
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_queryset(self):
+        p = PhdStudent.objects.get(user = self.request.user)
+        return JournalPublication.objects.filter(candidate = p)
 
 class phd_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
@@ -26,8 +36,15 @@ class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Deta
     # Conferences
 
 class phd_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/phd_list_conferences.html"
+    context_object_name = "conferences"
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_queryset(self):
+        p = PhdStudent.objects.get(user = self.request.user)
+        return ConferencePublication.objects.filter(candidate = p)
 
 class phd_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
@@ -41,8 +58,15 @@ class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.D
     # Teachings
 
 class phd_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/phd_list_teachings.html"
+    context_object_name = "teachings"
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_queryset(self):
+        p = PhdStudent.objects.get(user = self.request.user)
+        return Teaching.objects.filter(candidate = p)
 
 class phd_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
@@ -60,9 +84,17 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
     # Journals
 
 class staff_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):   
-    def dummy():
-        return
+    template_name = "phds/staff_list_journals.html"
+    context_object_name = "journals"
 
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_queryset(self):
+        staff_member = StaffMember.objects.get(user=self.request.user)
+        staff_member_phd_list = PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
+        return JournalPublication.objects.filter(candidate__in=staff_member_phd_list)
+    
 class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     def dummy():
         return
@@ -71,8 +103,16 @@ class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.De
     # Conferences
 
 class staff_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/staff_list_conferences.html"
+    context_object_name = "conferences"
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_queryset(self):
+        staff_member = StaffMember.objects.get(user=self.request.user)
+        staff_member_phd_list = PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
+        return ConferencePublication.objects.filter(candidate__in=staff_member_phd_list)
 
 class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     def dummy():
@@ -82,8 +122,16 @@ class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic
     # Teaching
 
 class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/staff_list_teachings.html"
+    context_object_name = "teachings"
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_queryset(self):
+        staff_member = StaffMember.objects.get(user=self.request.user)
+        staff_member_phd_list = PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
+        return Teaching.objects.filter(candidate__in=staff_member_phd_list)
 
 class staff_spectate_accept_reject_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     def dummy():
@@ -96,8 +144,14 @@ class staff_spectate_accept_reject_teaching(UserPassesTestMixin, LoginRequiredMi
     # Journals
 
 class sec_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):   
-    def dummy():
-        return
+    template_name = "phds/sec_list_journals.html"
+    context_object_name = "journals"
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_queryset(self):
+        return JournalPublication.objects.all()
 
 class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
@@ -114,8 +168,14 @@ def sec_delete_journal():
     # Conferences
 
 class sec_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/sec_list_conferences.html"
+    context_object_name = "conferences"
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_queryset(self):
+        return ConferencePublication.objects.all()
     
 class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
@@ -132,8 +192,14 @@ def sec_delete_conference():
     # Teaching
 
 class sec_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/sec_list_teachings.html"
+    context_object_name = "teachings"
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_queryset(self):
+        return Teaching.objects.all()
 
 class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     def dummy():
