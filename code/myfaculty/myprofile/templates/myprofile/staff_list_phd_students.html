@@ -34,11 +34,11 @@
                             <a href="{% url 'myprofile:staff_spectate_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
                         </td>
                         {% comment %} <td>
-                            <a href="{% url 'phds:staff_list_journals' %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
-                            <a href="{% url 'phds:staff_list_conferences' %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
+                            <a href="{% url 'phds:staff_list_journals' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
+                            <a href="{% url 'phds:staff_list_conferences' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
                         </td>
                         <td>
-                            <a href="{% url 'phds:staff_list_teachings' %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
+                            <a href="{% url 'phds:staff_list_teachings' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
                         </td> {% endcomment %}
                     </tr>
                 {% endfor %}

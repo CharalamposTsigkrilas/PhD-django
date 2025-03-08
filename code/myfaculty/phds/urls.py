@@ -8,6 +8,7 @@ urlpatterns = [
     path('sec/teachings', views.sec_list_teachings.as_view(), name='sec_list_teachings'),
 
     path('staff/journals', views.staff_list_journals.as_view(), name='staff_list_journals'),
+    # path('staff/journals/phd/<int:pk>', views.staff_list_journals, name='staff_list_journals'),
     path('staff/conferences', views.staff_list_conferences.as_view(), name='staff_list_conferences'),
     path('staff/teachings', views.staff_list_teachings.as_view(), name='staff_list_teachings'),
 
