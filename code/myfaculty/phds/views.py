@@ -195,6 +195,13 @@ class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
         return
 
 class sec_update_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+    # model = JournalPublication
+    # template_name = "phds/sec_journal_edit.html"
+    # form_class = JournalForm
+    # success_url = reverse_lazy('phds:sec_list_journals')
+
+    # def test_func(self):
+    #     return is_secreteriat(self.request.user)
     def dummy():
         return
 
@@ -230,6 +237,13 @@ class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
         return
 
 class sec_update_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+    # model = ConferencePublication
+    # template_name = "phds/sec_conference_edit.html"
+    # form_class = ConferenceForm
+    # success_url = reverse_lazy('phds:sec_list_conferences')
+
+    # def test_func(self):
+    #     return is_secreteriat(self.request.user)
     def dummy():
         return
 
@@ -265,6 +279,13 @@ class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
         return
 
 class sec_update_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+    # model = Teaching
+    # template_name = "phds/sec_teaching_edit.html"
+    # form_class = TeachingForm
+    # success_url = reverse_lazy('phds:sec_list_teachings')
+
+    # def test_func(self):
+    #     return is_secreteriat(self.request.user)
     def dummy():
         return
 
