@@ -198,8 +198,12 @@ class sec_update_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Update
     def dummy():
         return
 
-def sec_delete_journal():
-    return
+@login_required
+@user_passes_test(is_secreteriat)
+def sec_delete_journal(request, pk):
+    obj = get_object_or_404(JournalPublication, pk=pk)
+    obj.delete()
+    return redirect('phds:sec_list_journals')
     
     
     # Conferences
@@ -229,8 +233,12 @@ class sec_update_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Upd
     def dummy():
         return
 
-def sec_delete_conference():
-    return
+@login_required
+@user_passes_test(is_secreteriat)
+def sec_delete_conference(request, pk):
+    obj = get_object_or_404(ConferencePublication, pk=pk)
+    obj.delete()
+    return redirect('phds:sec_list_conferences')
 
 
     # Teaching
@@ -260,5 +268,9 @@ class sec_update_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Updat
     def dummy():
         return
 
-def sec_delete_teaching():
-    return
+@login_required
+@user_passes_test(is_secreteriat)
+def sec_delete_teaching(request, pk):
+    obj = get_object_or_404(Teaching, pk=pk)
+    obj.delete()
+    return redirect('phds:sec_list_teachings')
