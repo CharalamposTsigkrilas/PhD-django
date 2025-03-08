@@ -24,8 +24,8 @@
                     <th scope="col">Όνοματεπώνυμο</th>
                     <th scope="col">Email</th>       
                     <th scope="col"></th>
-                    <th scope="col">Δημοσιεύσεις</th>
-                    <th scope="col">Επικουρικά Έργα</th>
+                    {% comment %} <th scope="col">Δημοσιεύσεις</th>
+                    <th scope="col">Επικουρικά Έργα</th> {% endcomment %}
                 </tr>
             </thead>
             <tbody>
@@ -36,17 +36,24 @@
                         <td>
                             <a href="{% url 'myprofile:sec_edit_phd_student' phd.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                         </td>
-                        <td>
+                        {% comment %} <td>
                             <a href="{% url 'phds:sec_list_journals' %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
                             <a href="{% url 'phds:sec_list_conferences' %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
                         </td>
                         <td>
                             <a href="{% url 'phds:sec_list_teachings' %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
-                        </td>
+                        </td> {% endcomment %}
                     </tr>
                 {% endfor %}
             </tbody>
         </table>
+        <p>Όλες οι Δημοσιεύσεις                   
+            <a href="{% url 'phds:sec_list_journals' %}" type="submit" class="btn btn-primary tablebutton"> Περιοδικά </a>
+            <a href="{% url 'phds:sec_list_conferences' %}" type="submit" class="btn btn-primary tablebutton"> Συνέδρια </a>
+        </p> 
+        <p>Όλα τα Επικουρικά Έργα
+            <a href="{% url 'phds:sec_list_teachings' %}" type="submit" class="btn btn-primary tablebutton"> Φροντιστήρια </a>
+        </p>
     {% else %}
         <p>Δεν έχουν καταχωρηθεί διδάκτoρες</p>
     {% endif %} 

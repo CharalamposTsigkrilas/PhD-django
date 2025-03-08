@@ -2,6 +2,38 @@
 
 {% block middle %}
 
-    <h1>staff - phd teachings</h1>
+    <script>
+        $(document).ready(function() {
+            $('#teaching').DataTable({
+                "lengthChange": false,
+                "pageLength": 100
+            });
+        });
+    </script>
+    <div class="row">
+        <div class="col">
+            <h3>Επικουρικό Έργο</h3>
+        </div>
+    </div>
+    {% if teachings %}
+        <table id = "teaching" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Τύπος Διδασκαλίας</th>
+                    <th scope="col">Διδάκτορας</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for teaching in teachings %}
+                    <tr>
+                        <td>{{ teaching.teaching_type }}</td>
+                        <td>{{ teaching.candidate.display_name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Δεν έχουν καταχωρηθεί έργα</p>
+    {% endif %} 
 
 {% endblock %}

@@ -2,6 +2,38 @@
 
 {% block middle %}
 
-    <h1>staff - phd journals</h1>
+    <script>
+        $(document).ready(function() {
+            $('#journalpublication').DataTable({
+                "lengthChange": false,
+                "pageLength": 100
+            });
+        });
+    </script>
+    <div class="row">
+        <div class="col">
+            <h3>Δημοσιεύσεις Περιοδικών</h3>
+        </div>
+    </div>
+    {% if journals %}
+        <table id = "journalpublication" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Τίτλος</th>
+                    <th scope="col">Διδάκτορας</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for journal in journals %}
+                    <tr>
+                        <td>{{ journal.title }}</td>
+                        <td>{{ journal.candidate.display_name }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Δεν έχουν καταχωρηθεί δημοσιεύσεις</p>
+    {% endif %} 
 
 {% endblock %}
