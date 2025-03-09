@@ -43,6 +43,7 @@ class Teaching(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
     faculty = models.ForeignKey(StaffMember, null=True, on_delete=models.SET_NULL)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
+    
     year = models.IntegerField()
     teaching_type = models.CharField(max_length=50, choices=TEACHING_TYPES)
     hours_per_week = models.IntegerField()	

@@ -7,6 +7,7 @@ from myprofile.checks import is_phd_student, is_secreteriat, is_staff_member
 from myprofile.models import StaffMember, PhdStudent
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse_lazy
+from .forms import JournalForm, ConferenceForm, TeachingForm, JournalFormRestricted, ConferenceFormRestricted, TeachingFormRestricted
 
 # Create your views here.
 
@@ -48,7 +49,7 @@ class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Deta
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = JournalForm(instance=self.object)
+        context['form'] = JournalFormRestricted(instance=self.object)
         return context
     # def dummy():
         # return 
@@ -88,7 +89,7 @@ class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.D
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ConferenceForm(instance=self.object)
+        context['form'] = ConferenceFormRestricted(instance=self.object)
         return context
     # def dummy():
     #     return  
@@ -128,7 +129,7 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = TeachingForm(instance=self.object)
+        context['form'] = TeachingFormRestricted(instance=self.object)
         return context
     # def dummy():
     #     return
@@ -169,7 +170,7 @@ class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.De
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = JournalForm(instance=self.object)
+        context['form'] = JournalFormRestricted(instance=self.object)
     # def dummy():
     #     return
     
@@ -198,7 +199,7 @@ class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ConferenceForm(instance=self.object)
+        context['form'] = ConferenceFormRestricted(instance=self.object)
     # def dummy():
         # return
     
@@ -220,7 +221,7 @@ class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.List
 class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
     template_name = "phds/staff_spectate_teaching_accept_reject.html"
-    form_class = TeachingForm
+    form_class = TeachingFormRestricted
     success_url = reverse_lazy('phds:staff_list_teachings')
 
     def test_func(self):
