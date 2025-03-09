@@ -255,7 +255,7 @@ class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
     # def dummy():
     #     return
 
-class sec_update_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+class sec_edit_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = JournalPublication
     template_name = "phds/sec_edit_journal.html"
     form_class = JournalForm
@@ -297,7 +297,7 @@ class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
     # def dummy():
     #     return
 
-class sec_update_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+class sec_edit_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = ConferencePublication
     template_name = "phds/sec_edit_conference.html"
     form_class = ConferenceForm
@@ -339,7 +339,7 @@ class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
     # def dummy():
         # return
 
-class sec_update_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+class sec_edit_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
     template_name = "phds/sec_edit_teaching.html"
     form_class = TeachingForm

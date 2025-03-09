@@ -4,17 +4,17 @@ from . import views
 app_name = 'phds'
 urlpatterns = [
     path('sec/journals', views.sec_list_journals.as_view(), name='sec_list_journals'),
-    path('sec/journal/<int:pk>', views.sec_update_journal.as_view(), name='sec_update_journal'),
+    path('sec/journal/<int:pk>', views.sec_edit_journal.as_view(), name='sec_edit_journal'),
     path('sec/journal/<int:pk>/delete', views.sec_delete_journal, name='sec_delete_journal'),
     path('sec/journal/new', views.sec_create_journal.as_view(), name='sec_create_journal'),
 
     path('sec/conferences', views.sec_list_conferences.as_view(), name='sec_list_conferences'),
-    path('sec/conference/<int:pk>', views.sec_update_conference.as_view(), name='sec_update_conference'),
+    path('sec/conference/<int:pk>', views.sec_edit_conference.as_view(), name='sec_edit_conference'),
     path('sec/conference/<int:pk>/delete', views.sec_delete_conference, name='sec_delete_conference'),
     path('sec/conference/new', views.sec_create_conference.as_view(), name='sec_create_conference'),
 
     path('sec/teachings', views.sec_list_teachings.as_view(), name='sec_list_teachings'),
-    path('sec/teaching/<int:pk>', views.sec_update_teaching.as_view(), name='sec_update_teaching'),
+    path('sec/teaching/<int:pk>', views.sec_edit_teaching.as_view(), name='sec_edit_teaching'),
     path('sec/teaching/<int:pk>/delete', views.sec_delete_teaching, name='sec_delete_teaching'),
     path('sec/teaching/new', views.sec_create_teaching.as_view(), name='sec_create_teaching'),
 
