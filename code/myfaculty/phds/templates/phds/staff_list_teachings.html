@@ -21,6 +21,7 @@
                 <tr>
                     <th scope="col">Τύπος Διδασκαλίας</th>
                     <th scope="col">Διδάκτορας</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                     <tr>
                         <td>{{ teaching.teaching_type }}</td>
                         <td>{{ teaching.candidate.display_name }}</td>
+                        <td>
+                            <a href="{% url 'phds:staff_spectate_teaching_accept_reject' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>

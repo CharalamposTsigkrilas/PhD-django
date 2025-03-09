@@ -11,6 +11,7 @@ from django.urls import reverse_lazy
 # Create your views here.
 
 
+
 # phds views --> PhD students create and spectate only
         
     # Journals
@@ -27,19 +28,30 @@ class phd_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListVie
         return JournalPublication.objects.filter(candidate = p)
 
 class phd_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = JournalPublication
-    # template_name = "phds/phd_journal_edit.html"
-    # form_class = JournalForm
-    # success_url = reverse_lazy('phds:phd_list_journals')
+    model = JournalPublication
+    template_name = "phds/phd_create_journal.html"
+    form_class = JournalForm
+    success_url = reverse_lazy('phds:phd_list_journals')
 
-    # def test_func(self):
-    #     return is_phd_student(self.request.user)    
-    def dummy():
-        return
+    def test_func(self):
+        return is_phd_student(self.request.user)    
+    # def dummy():
+    #     return
     
 class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
-    def dummy():
-        return
+    model = JournalPublication
+    template_name = "phds/phd_spectate_journal.html"
+    context_object_name = "journal"
+    
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = JournalForm(instance=self.object)
+        return context
+    # def dummy():
+        # return 
     
     
     # Conferences
@@ -56,19 +68,30 @@ class phd_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.List
         return ConferencePublication.objects.filter(candidate = p)
 
 class phd_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = ConferencePublication
-    # template_name = "phds/phd_conference_edit.html"
-    # form_class = ConferenceForm
-    # success_url = reverse_lazy('phds:phd_list_conferences')
+    model = ConferencePublication
+    template_name = "phds/phd_create_conference.html"
+    form_class = ConferenceForm
+    success_url = reverse_lazy('phds:phd_list_conferences')
 
-    # def test_func(self):
-    #     return is_phd_student(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    # def dummy():
+    #     return
     
 class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
-    def dummy():
-        return  
+    model = ConferencePublication
+    template_name = "phds/phd_spectate_conference.html"
+    context_object_name = "conference"
+    
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ConferenceForm(instance=self.object)
+        return context
+    # def dummy():
+    #     return  
     
     
     # Teachings
@@ -85,19 +108,30 @@ class phd_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListVi
         return Teaching.objects.filter(candidate = p)
 
 class phd_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = Teaching
-    # template_name = "phds/phd_teaching_edit.html"
-    # form_class = TeachingForm
-    # success_url = reverse_lazy('phds:phd_list_teachings')
+    model = Teaching
+    template_name = "phds/phd_create_teaching.html"
+    form_class = TeachingForm
+    success_url = reverse_lazy('phds:phd_list_teachings')
 
-    # def test_func(self):
-    #     return is_phd_student(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    # def dummy():
+    #     return
     
 class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
-    def dummy():
-        return
+    model = Teaching
+    template_name = "phds/phd_spectate_teaching.html"
+    context_object_name = "teaching"
+    
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = TeachingForm(instance=self.object)
+        return context
+    # def dummy():
+    #     return
 
 
 
@@ -126,8 +160,18 @@ class staff_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListV
 #     return render(request, "phds/staff_list_journals.html", {"journals": journals})
 
 class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
-    def dummy():
-        return
+    model = JournalPublication
+    template_name = "phds/staff_spectate_journal.html"
+    context_object_name = "journal"
+    
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = JournalForm(instance=self.object)
+    # def dummy():
+    #     return
     
     
     # Conferences
@@ -145,8 +189,18 @@ class staff_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.Li
         return ConferencePublication.objects.filter(candidate__in=staff_member_phd_list)
 
 class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
-    def dummy():
-        return    
+    model = ConferencePublication
+    template_name = "phds/staff_spectate_conference.html"
+    context_object_name = "conference"
+    
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['form'] = ConferenceForm(instance=self.object)
+    # def dummy():
+        # return
     
     
     # Teaching
@@ -163,9 +217,16 @@ class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.List
         staff_member_phd_list = PhdStudent.objects.filter(Q(supervisor=staff_member) | Q(member1=staff_member) | Q(member2=staff_member))
         return Teaching.objects.filter(candidate__in=staff_member_phd_list)
 
-class staff_spectate_accept_reject_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
-    def dummy():
-        return
+class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+    model = Teaching
+    template_name = "phds/staff_spectate_teaching_accept_reject.html"
+    form_class = TeachingForm
+    success_url = reverse_lazy('phds:staff_list_teachings')
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    # def dummy():
+    #     return
     
 
 
@@ -184,26 +245,26 @@ class sec_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListVie
         return JournalPublication.objects.all()
 
 class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = JournalPublication
-    # template_name = "phds/sec_journal_edit.html"
-    # form_class = JournalForm
-    # success_url = reverse_lazy('phds:sec_list_journals')
+    model = JournalPublication
+    template_name = "phds/sec_edit_journal.html"
+    form_class = JournalForm
+    success_url = reverse_lazy('phds:sec_list_journals')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+    #     return
 
 class sec_update_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
-    # model = JournalPublication
-    # template_name = "phds/sec_journal_edit.html"
-    # form_class = JournalForm
-    # success_url = reverse_lazy('phds:sec_list_journals')
+    model = JournalPublication
+    template_name = "phds/sec_edit_journal.html"
+    form_class = JournalForm
+    success_url = reverse_lazy('phds:sec_list_journals')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+    #     return
 
 @login_required
 @user_passes_test(is_secreteriat)
@@ -226,26 +287,26 @@ class sec_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.List
         return ConferencePublication.objects.all()
     
 class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = ConferencePublication
-    # template_name = "phds/sec_conference_edit.html"
-    # form_class = ConferenceForm
-    # success_url = reverse_lazy('phds:sec_list_conferences')
+    model = ConferencePublication
+    template_name = "phds/sec_edit_conference.html"
+    form_class = ConferenceForm
+    success_url = reverse_lazy('phds:sec_list_conferences')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+    #     return
 
 class sec_update_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
-    # model = ConferencePublication
-    # template_name = "phds/sec_conference_edit.html"
-    # form_class = ConferenceForm
-    # success_url = reverse_lazy('phds:sec_list_conferences')
+    model = ConferencePublication
+    template_name = "phds/sec_edit_conference.html"
+    form_class = ConferenceForm
+    success_url = reverse_lazy('phds:sec_list_conferences')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+    #     return
 
 @login_required
 @user_passes_test(is_secreteriat)
@@ -268,26 +329,26 @@ class sec_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListVi
         return Teaching.objects.all()
 
 class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
-    # model = Teaching
-    # template_name = "phds/sec_teaching_edit.html"
-    # form_class = TeachingForm
-    # success_url = reverse_lazy('phds:sec_list_teachings')
+    model = Teaching
+    template_name = "phds/sec_edit_teaching.html"
+    form_class = TeachingForm
+    success_url = reverse_lazy('phds:sec_list_teachings')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+        # return
 
 class sec_update_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
-    # model = Teaching
-    # template_name = "phds/sec_teaching_edit.html"
-    # form_class = TeachingForm
-    # success_url = reverse_lazy('phds:sec_list_teachings')
+    model = Teaching
+    template_name = "phds/sec_edit_teaching.html"
+    form_class = TeachingForm
+    success_url = reverse_lazy('phds:sec_list_teachings')
 
-    # def test_func(self):
-    #     return is_secreteriat(self.request.user)
-    def dummy():
-        return
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    # def dummy():
+        # return
 
 @login_required
 @user_passes_test(is_secreteriat)

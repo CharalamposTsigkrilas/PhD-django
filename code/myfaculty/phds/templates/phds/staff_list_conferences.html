@@ -21,6 +21,7 @@
                 <tr>
                     <th scope="col">Τίτλος</th>
                     <th scope="col">Διδάκτορας</th>
+                    <th scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -28,6 +29,9 @@
                     <tr>
                         <td>{{ conference.title }}</td>
                         <td>{{ conferences.candidate.display_name }}</td>
+                        <td>
+                            <a href="{% url 'phds:staff_spectate_conference' conference.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                        </td>
                     </tr>
                 {% endfor %}
             </tbody>
