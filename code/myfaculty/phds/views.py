@@ -36,8 +36,6 @@ class phd_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
 
     def test_func(self):
         return is_phd_student(self.request.user)    
-    # def dummy():
-    #     return
     
 class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = JournalPublication
@@ -51,8 +49,6 @@ class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Deta
         context = super().get_context_data(**kwargs)
         context['form'] = JournalFormRestricted(instance=self.object)
         return context
-    # def dummy():
-        # return 
     
     
     # Conferences
@@ -76,8 +72,6 @@ class phd_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
 
     def test_func(self):
         return is_phd_student(self.request.user)
-    # def dummy():
-    #     return
     
 class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = ConferencePublication
@@ -90,9 +84,7 @@ class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.D
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ConferenceFormRestricted(instance=self.object)
-        return context
-    # def dummy():
-    #     return  
+        return context 
     
     
     # Teachings
@@ -116,8 +108,6 @@ class phd_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
 
     def test_func(self):
         return is_phd_student(self.request.user)
-    # def dummy():
-    #     return
     
 class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = Teaching
@@ -131,9 +121,6 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
         context = super().get_context_data(**kwargs)
         context['form'] = TeachingFormRestricted(instance=self.object)
         return context
-    # def dummy():
-    #     return
-
 
 
 
@@ -171,8 +158,7 @@ class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.De
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = JournalFormRestricted(instance=self.object)
-    # def dummy():
-    #     return
+        return context
     
     
     # Conferences
@@ -200,8 +186,7 @@ class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['form'] = ConferenceFormRestricted(instance=self.object)
-    # def dummy():
-        # return
+        return context
     
     
     # Teaching
@@ -226,8 +211,6 @@ class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMi
 
     def test_func(self):
         return is_staff_member(self.request.user)
-    # def dummy():
-    #     return
     
 
 
@@ -253,8 +236,6 @@ class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-    #     return
 
 class sec_edit_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = JournalPublication
@@ -264,8 +245,6 @@ class sec_edit_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateVi
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-    #     return
 
 @login_required
 @user_passes_test(is_secreteriat)
@@ -295,8 +274,6 @@ class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-    #     return
 
 class sec_edit_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = ConferencePublication
@@ -306,8 +283,6 @@ class sec_edit_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Updat
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-    #     return
 
 @login_required
 @user_passes_test(is_secreteriat)
@@ -337,8 +312,6 @@ class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-        # return
 
 class sec_edit_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
@@ -348,8 +321,6 @@ class sec_edit_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateV
 
     def test_func(self):
         return is_secreteriat(self.request.user)
-    # def dummy():
-        # return
 
 @login_required
 @user_passes_test(is_secreteriat)

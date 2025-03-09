@@ -33,7 +33,7 @@
                         <td>{{ teaching.teaching_type }}</td>
                         <td>{{ teaching.candidate.display_name }}</td>
                         <td>
-                            <a href="{% url 'phds:sec_update_teaching' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            <a href="{% url 'phds:sec_edit_teaching' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                         </td>
                     </tr>
                 {% endfor %}

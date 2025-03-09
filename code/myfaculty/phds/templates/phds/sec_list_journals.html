@@ -33,7 +33,7 @@
                         <td>{{ journal.title }}</td>
                         <td>{{ journal.candidate.display_name }}</td>
                         <td>
-                            <a href="{% url 'phds:sec_update_journal' journal.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            <a href="{% url 'phds:sec_edit_journal' journal.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                         </td>
                     </tr>
                 {% endfor %}

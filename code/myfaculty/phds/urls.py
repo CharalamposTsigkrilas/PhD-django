@@ -40,5 +40,5 @@ urlpatterns = [
     
     path('phd/teachings', views.phd_list_teachings.as_view(), name='phd_list_teachings'),
     path('phd/teaching/<int:pk>/details', views.phd_spectate_teaching.as_view(), name='phd_spectate_teaching'),
-    path('phd/conference/new', views.phd_create_conference.as_view(), name='phd_create_conference'),
+    path('phd/teaching/new', views.phd_create_teaching.as_view(), name='phd_create_teaching'),
 ]

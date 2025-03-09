@@ -150,6 +150,14 @@ class JournalForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_JOURNAL_LAYOUT
 
+class JournalFormRestrictedForPhd(JournalForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for k in JOURNAL_FIELDS:
+            self.fields[k].disabled = True
+
 class JournalFormRestricted(JournalForm):
 
     def __init__(self, *args, **kwargs):
@@ -172,6 +180,14 @@ class ConferenceForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_CONFERENCE_LAYOUT
 
+class ConferenceFormForPhd(ConferenceForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for k in CONFERENCE_FIELDS:
+            self.fields[k].disabled = True
+
 class ConferenceFormRestricted(ConferenceForm):
 
     def __init__(self, *args, **kwargs):
@@ -193,6 +209,14 @@ class TeachingForm(ModelForm):
 
         self.helper = FormHelper()
         self.helper.layout = SEC_TEACHING_LAYOUT
+
+class TeachingFormRestrictedForPhd(TeachingForm):
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        for k in TEACHING_FIELDS:
+            self.fields[k].disabled = True
 
 class TeachingFormRestricted(TeachingForm):
 
