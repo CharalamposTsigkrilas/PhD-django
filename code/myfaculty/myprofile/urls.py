@@ -31,4 +31,6 @@ urlpatterns = [
     path('staff/phds', views.staff_list_phd_students.as_view(), name='staff_list_phd_students'),
     path('staff/phd/<int:pk>/details', views.staff_spectate_phd_student.as_view(), name='staff_spectate_phd_student'),
     
+    path('phd/profile', views.PhdStudentProfileView.as_view(), name='phdstudentprofile'),
+    
 ]

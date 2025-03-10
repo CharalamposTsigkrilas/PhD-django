@@ -472,3 +472,6 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
         for k in TEACHING_FIELDS:
             if k != 'approved_by_faculty':
                 self.fields[k].disabled = True
+                
+        self.helper = FormHelper()
+        self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT

@@ -1,11 +1,20 @@
 {% extends 'myprofile/page.html' %}
 {% load crispy_forms_tags %}
+{% load profile_tags %}
 
 {% block middle %}
 
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
+        {% if request.user|is_staff_member %}
+            <div class="row">
+                <div class="col">
+                    <h3>Στοιχεία Διδάκτορα</h3>
+                </div>
+            </div>
+        {% endif %}
+
         {% crispy form %}
 
         {% if form.instance.photo %}
