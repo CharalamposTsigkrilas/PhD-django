@@ -7,7 +7,7 @@ from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
 STAFF_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'title']
 ASSOCIATE_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'seat_no', 'office_no']
 STUDENT_FIELDS_DISABLED = ['email', 'given_name', 'surname', 'program', 'reg_num']
-PHD_STUDENT_FIELDS_DISABLED = ['reg_num', 'email', 'given_name', 'surname', 'fathers_name', 'date_of_birth',
+PHD_STUDENT_FIELDS = ['reg_num', 'email', 'given_name', 'surname', 'fathers_name', 'date_of_birth',
                                 'external_email', 'gender', 'mobile_phone', 'home_phone', 'home_address_street',
                                 'subject_gr', 'subject_en', 'inscription_date', 'inscription_ref', 'cv_gr', 'cv_en', 
                                 'scopus_id', 'supervisor', 'member1', 'member2', 'photo']
@@ -208,78 +208,100 @@ SEC_ASSOCIATE_LAYOUT = Layout(
                 css_class="row"),
             )
 
-SEC_PHD_STUDENT_LAYOUT = Layout(
+SEC_CREATE_PHD_STUDENT_LAYOUT = Layout(
+            Row(
+               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+               css_class="row"),
+            *[  
+                Row(
+                    Div(Field(field), css_class='col-md-12'),
+                    css_class="row"
+                ) for field in PHD_STUDENT_FIELDS
+            ]
+        )
+
+SEC_EDIT_PHD_STUDENT_LAYOUT = Layout(
             Row(
                Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                css_class="row"),
-            Row(
-                Div(Field('reg_num'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('email'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('given_name'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('surname'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('fathers_name'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('date_of_birth'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('external_email'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('gender'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('mobile_phone'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('home_phone'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('home_address_street'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('subject_gr'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('subject_en'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('inscription_date'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('inscription_ref'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('cv_gr'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('cv_en'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('scopus_id'),css_class = 'col-md-12'),
-                css_class="row"),            
-            Row(
-                Div(Field('supervisor'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('member1'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('member2'),css_class = 'col-md-12'),
-                css_class="row"),
-            Row(
-                Div(Field('photo'),css_class = 'col-md-12'),
-                css_class="row"),
-            )
+            *[  
+                Row(
+                    Div(Field(field), css_class='col-md-12'),
+                    css_class="row"
+                ) for field in PHD_STUDENT_FIELDS
+            ]
+        )
+
+            # Row(
+            #     Div(Field('reg_num'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('email'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('given_name'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('surname'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('fathers_name'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('date_of_birth'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('external_email'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('gender'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('mobile_phone'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('home_phone'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('home_address_street'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('subject_gr'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('subject_en'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('inscription_date'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('inscription_ref'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('cv_gr'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('cv_en'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('scopus_id'),css_class = 'col-md-12'),
+            #     css_class="row"),            
+            # Row(
+            #     Div(Field('supervisor'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('member1'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('member2'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # Row(
+            #     Div(Field('photo'),css_class = 'col-md-12'),
+            #     css_class="row"),
+            # )
+
 
 class StaffForm(ModelForm):
 
@@ -348,10 +370,11 @@ class StudentFormRestricted(ModelForm):
         for k in STUDENT_FIELDS_DISABLED:
             self.fields[k].disabled = True
 
-class PhdStudentForm(ModelForm):
+
+class SecCreatePhdStudentForm(ModelForm):
     
     class Meta:
-        fields = PHD_STUDENT_FIELDS_DISABLED
+        fields = PHD_STUDENT_FIELDS
         model = PhdStudent
         labels = LABELS
         
@@ -359,29 +382,39 @@ class PhdStudentForm(ModelForm):
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
-        self.helper.layout = SEC_PHD_STUDENT_LAYOUT
+        self.helper.layout = SEC_CREATE_PHD_STUDENT_LAYOUT
 
-class PhdStudentFormRestricted(PhdStudentForm):
+class SecEditPhdStudentForm(ModelForm):
     
     class Meta:
-        fields = PHD_STUDENT_FIELDS_DISABLED
+        fields = PHD_STUDENT_FIELDS
         model = PhdStudent
         labels = LABELS
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for k in PHD_STUDENT_FIELDS_DISABLED:
+
+        self.helper = FormHelper()
+        self.helper.layout = SEC_EDIT_PHD_STUDENT_LAYOUT
+
+class PhdEditPhdStudentFormRestricted(SecEditPhdStudentForm):
+        
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        
+        for k in PHD_STUDENT_FIELDS:
             if k != 'photo':
                 self.fields[k].disabled = True
 
-class PhdStudentFormRestrictedForStaff(ModelForm):
+class StaffSpectatePhdStudentFormRestricted(ModelForm):
     
     class Meta:
-        fields = PHD_STUDENT_FIELDS_DISABLED
+        fields = PHD_STUDENT_FIELDS
         model = PhdStudent
         labels = LABELS
         
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        for k in PHD_STUDENT_FIELDS_DISABLED:
-                self.fields[k].disabled = True
+        
+        for k in PHD_STUDENT_FIELDS:
+            self.fields[k].disabled = True

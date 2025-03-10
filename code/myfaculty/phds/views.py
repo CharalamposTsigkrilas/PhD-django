@@ -7,7 +7,7 @@ from myprofile.checks import is_phd_student, is_secreteriat, is_staff_member
 from myprofile.models import StaffMember, PhdStudent
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.urls import reverse_lazy
-from .forms import JournalForm, ConferenceForm, TeachingForm, JournalFormRestricted, ConferenceFormRestricted, TeachingFormRestricted
+from .forms import *
 
 # Create your views here.
 
@@ -31,7 +31,7 @@ class phd_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListVie
 class phd_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = JournalPublication
     template_name = "phds/phd_create_journal.html"
-    form_class = JournalForm
+    form_class = PhdCreateJournalForm
     success_url = reverse_lazy('phds:phd_list_journals')
 
     def test_func(self):
@@ -47,7 +47,7 @@ class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Deta
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = JournalFormRestricted(instance=self.object)
+        context['form'] = PhdSpectateConferenceFormRestricted(instance=self.object)
         return context
     
     
@@ -67,7 +67,7 @@ class phd_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.List
 class phd_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = ConferencePublication
     template_name = "phds/phd_create_conference.html"
-    form_class = ConferenceForm
+    form_class = PhdCreateConferenceForm
     success_url = reverse_lazy('phds:phd_list_conferences')
 
     def test_func(self):
@@ -83,7 +83,7 @@ class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.D
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ConferenceFormRestricted(instance=self.object)
+        context['form'] = PhdSpectateConferenceFormRestricted(instance=self.object)
         return context 
     
     
@@ -103,7 +103,7 @@ class phd_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListVi
 class phd_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = Teaching
     template_name = "phds/phd_create_teaching.html"
-    form_class = TeachingForm
+    form_class = PhdCreateTeachingForm
     success_url = reverse_lazy('phds:phd_list_teachings')
 
     def test_func(self):
@@ -119,7 +119,7 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = TeachingFormRestricted(instance=self.object)
+        context['form'] = PhdSpectateTeachingFormRestricted(instance=self.object)
         return context
 
 
@@ -157,7 +157,7 @@ class staff_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.De
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = JournalFormRestricted(instance=self.object)
+        context['form'] = StaffSpectateJournalFormRestricted(instance=self.object)
         return context
     
     
@@ -185,7 +185,7 @@ class staff_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = ConferenceFormRestricted(instance=self.object)
+        context['form'] = StaffSpectateConferenceFormRestricted(instance=self.object)
         return context
     
     
@@ -206,7 +206,7 @@ class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.List
 class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
     template_name = "phds/staff_spectate_teaching_accept_reject.html"
-    form_class = TeachingFormRestricted
+    form_class = StaffSpectateAcceptRejectTeachingFormRestricted
     success_url = reverse_lazy('phds:staff_list_teachings')
 
     def test_func(self):
@@ -231,7 +231,7 @@ class sec_list_journals(UserPassesTestMixin, LoginRequiredMixin, generic.ListVie
 class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = JournalPublication
     template_name = "phds/sec_edit_journal.html"
-    form_class = JournalForm
+    form_class = SecCreateJournalForm
     success_url = reverse_lazy('phds:sec_list_journals')
 
     def test_func(self):
@@ -240,7 +240,7 @@ class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
 class sec_edit_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = JournalPublication
     template_name = "phds/sec_edit_journal.html"
-    form_class = JournalForm
+    form_class = SecEditJournalForm
     success_url = reverse_lazy('phds:sec_list_journals')
 
     def test_func(self):
@@ -269,7 +269,7 @@ class sec_list_conferences(UserPassesTestMixin, LoginRequiredMixin, generic.List
 class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = ConferencePublication
     template_name = "phds/sec_edit_conference.html"
-    form_class = ConferenceForm
+    form_class = SecCreateConferenceForm
     success_url = reverse_lazy('phds:sec_list_conferences')
 
     def test_func(self):
@@ -278,7 +278,7 @@ class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
 class sec_edit_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = ConferencePublication
     template_name = "phds/sec_edit_conference.html"
-    form_class = ConferenceForm
+    form_class = SecEditConferenceForm
     success_url = reverse_lazy('phds:sec_list_conferences')
 
     def test_func(self):
@@ -307,7 +307,7 @@ class sec_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListVi
 class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):   
     model = Teaching
     template_name = "phds/sec_edit_teaching.html"
-    form_class = TeachingForm
+    form_class = SecCreateTeachingForm
     success_url = reverse_lazy('phds:sec_list_teachings')
 
     def test_func(self):
@@ -316,7 +316,7 @@ class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
 class sec_edit_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
     template_name = "phds/sec_edit_teaching.html"
-    form_class = TeachingForm
+    form_class = SecEditTeachingForm
     success_url = reverse_lazy('phds:sec_list_teachings')
 
     def test_func(self):

@@ -4,7 +4,7 @@ from django.shortcuts import render, redirect, get_object_or_404
 from django.http import HttpResponse
 from .models import StaffMember, Associate, Student, PhdStudent
 from .checks import is_staff_member, is_associate, is_secreteriat, is_internal_staff_member, is_student, is_phd_student
-from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, PhdStudentForm, PhdStudentFormRestricted, PhdStudentFormRestrictedForStaff
+from .forms import StaffFormRestricted, AssociateFormRestricted, AssociateForm, StaffForm, StudentFormRestricted, SecCreatePhdStudentForm, SecEditPhdStudentForm, PhdEditPhdStudentFormRestricted, StaffSpectatePhdStudentFormRestricted
 from django.contrib.auth.decorators import login_required, user_passes_test
 from django.contrib.auth import logout
 from django.urls import reverse_lazy
@@ -70,7 +70,7 @@ def student_profile(request):
 class PhdStudentProfileView(LoginRequiredMixin, generic.UpdateView):
     model = PhdStudent
     template_name = "myprofile/phdstudentprofile.html"
-    form_class = PhdStudentFormRestricted
+    form_class = PhdEditPhdStudentFormRestricted
     success_url = reverse_lazy('myprofile:index')
 
     def get_object(self, queryset=None):
@@ -266,7 +266,7 @@ class sec_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.Lis
 class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
     model = PhdStudent
     template_name = "myprofile/sec_edit_phd_student.html"
-    form_class = PhdStudentForm
+    form_class = SecEditPhdStudentForm
     success_url = reverse_lazy('myprofile:sec_list_phd_students')
     
     def test_func(self):
@@ -275,7 +275,7 @@ class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.Upda
 class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
     model = PhdStudent
     template_name = "myprofile/sec_edit_phd_student.html"
-    form_class = PhdStudentForm
+    form_class = SecCreatePhdStudentForm
     success_url = reverse_lazy('myprofile:sec_list_phd_students')
     
     def test_func(self):
@@ -314,5 +314,5 @@ class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generi
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = PhdStudentFormRestrictedForStaff(instance=self.object) 
+        context['form'] = StaffSpectatePhdStudentFormRestricted(instance=self.object) 
         return context
