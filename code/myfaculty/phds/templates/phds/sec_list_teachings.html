@@ -22,6 +22,7 @@
         <table id = "teaching" class="table">
             <thead>
                 <tr>
+                    <th scope="col">Μάθημα</th>
                     <th scope="col">Τύπος Διδασκαλίας</th>
                     <th scope="col">Διδάκτορας</th>
                     <th scope="col"></th>
@@ -30,6 +31,7 @@
             <tbody>
                 {% for teaching in teachings %}
                     <tr>
+                        <td>{{ teaching.course }}</td>
                         <td>{{ teaching.teaching_type }}</td>
                         <td>{{ teaching.candidate.display_name }}</td>
                         <td>

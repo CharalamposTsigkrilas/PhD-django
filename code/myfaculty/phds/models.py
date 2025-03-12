@@ -1,6 +1,8 @@
 from django.db import models
 from myprofile.models import StaffMember, PhdStudent
 from curricula.models import Course
+from datetime import date
+
 # Create your models here.
 
 class JournalPublication(models.Model):
@@ -41,7 +43,7 @@ class Teaching(models.Model):
     ]
 
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
-    faculty = models.ForeignKey(StaffMember, null=True, on_delete=models.SET_NULL)
+    faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
     
     year = models.IntegerField()
@@ -51,5 +53,16 @@ class Teaching(models.Model):
     have_contract = models.BooleanField()
     comments = models.TextField()
 
-    approved_by_faculty = models.BooleanField()
-    approved_date = models.DateField()
+    approved_by_faculty = models.BooleanField(null=True, default=False)
+    approved_date = models.DateField(null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.candidate and self.candidate.supervisor:
+            self.faculty = self.candidate.supervisor
+        
+        if self.approved_by_faculty == True:
+            self.approved_date = date.today()
+        else:
+            self.approved_date = None
+        
+        super().save(*args, **kwargs)

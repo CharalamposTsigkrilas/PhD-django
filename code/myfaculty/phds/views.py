@@ -37,6 +37,10 @@ class phd_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
     def test_func(self):
         return is_phd_student(self.request.user)    
     
+    def form_valid(self, form):
+        form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
+        return super().form_valid(form)
+    
 class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = JournalPublication
     template_name = "phds/phd_spectate_journal.html"
@@ -47,7 +51,7 @@ class phd_spectate_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Deta
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = PhdSpectateConferenceFormRestricted(instance=self.object)
+        context['form'] = PhdSpectateJournalFormRestricted(instance=self.object)
         return context
     
     
@@ -72,6 +76,10 @@ class phd_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
 
     def test_func(self):
         return is_phd_student(self.request.user)
+
+    def form_valid(self, form):
+        form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
+        return super().form_valid(form)
     
 class phd_spectate_conference(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = ConferencePublication
@@ -108,6 +116,15 @@ class phd_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
 
     def test_func(self):
         return is_phd_student(self.request.user)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["candidate"] = PhdStudent.objects.get(user=self.request.user)  # Pass PhD student
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
+        return super().form_valid(form)
     
 class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):   
     model = Teaching

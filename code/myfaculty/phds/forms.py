@@ -38,7 +38,7 @@ LABELS = {
     'doi' : 'Ψηφιακό Αναγνωριστικό (DOI)',
     'conference_name' : 'Όνομα Συνεδρίου',
     'venue' : 'Χώρος Συνεδρίου',
-    'faculty' : 'Επιτηρητής Υποψήφιου Διδάκτορα',
+    'faculty' : 'Επιτηρητής Υποψήφιου Διδάκτορα (επιλέγεται αυτόματα και εμφανίζεται ύστερα από τη δημιουργία/ενήμερωση)',
     'course' : 'Μάθημα',
     'teaching_type' : 'Είδος Φροντιστηρίου',
     'hours_per_week' : 'Ώρες Διδασκαλίας τη Βδομάδα',
@@ -415,10 +415,15 @@ class PhdCreateTeachingForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
-
+        
         self.helper = FormHelper()
         self.helper.layout = PHD_CREATE_TEACHING_LAYOUT
+
+        self.fields["faculty"].disabled = True  
+        if candidate.supervisor:  
+            self.fields["faculty"].initial = candidate.supervisor
 
 class PhdSpectateTeachingFormRestricted(ModelForm):
 
@@ -446,6 +451,9 @@ class SecCreateTeachingForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_CREATE_TEACHING_LAYOUT
 
+        self.fields["faculty"].disabled = True
+        self.fields["approved_date"].disabled = True
+
 class SecEditTeachingForm(ModelForm):
 
     class Meta:
@@ -458,6 +466,9 @@ class SecEditTeachingForm(ModelForm):
 
         self.helper = FormHelper()
         self.helper.layout = SEC_EDIT_TEACHING_LAYOUT
+
+        self.fields["faculty"].disabled = True
+        self.fields["approved_date"].disabled = True
 
 class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
 
