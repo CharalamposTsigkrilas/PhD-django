@@ -224,6 +224,18 @@ SEC_EDIT_TEACHING_LAYOUT = Layout(
             ]
         )
 
+STAFF_SPECTATE_TEACHING_LAYOUT = Layout(
+            Row(
+               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+               css_class="row"),
+            *[  
+                Row(
+                    Div(Field(field), css_class='col-md-12'),
+                    css_class="row"
+                ) for field in TEACHING_FIELDS
+            ]
+        ) 
+
 STAFF_EDIT_TEACHING_LAYOUT = Layout(
             Row(
                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
@@ -478,11 +490,19 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
         super().__init__(*args, **kwargs)
 
-        for k in TEACHING_FIELDS:
-            if k != 'approved_by_faculty':
-                self.fields[k].disabled = True
-                
-        self.helper = FormHelper()
-        self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT
+        for k in TEACHING_FIELDS:            
+            self.fields[k].disabled = True
+
+        if self.instance.faculty:
+            self.helper = FormHelper()
+
+            if self.instance.faculty.user == self.user:
+                self.fields["approved_by_faculty"].disabled = False
+
+                self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT
+            else:    
+                self.helper.layout = STAFF_SPECTATE_TEACHING_LAYOUT
+                           

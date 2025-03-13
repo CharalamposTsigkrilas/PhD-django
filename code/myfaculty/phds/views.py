@@ -229,6 +229,11 @@ class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMi
     def test_func(self):
         return is_staff_member(self.request.user)
     
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+    
 
 
 # sec views --> Secreatary CRUD everything
