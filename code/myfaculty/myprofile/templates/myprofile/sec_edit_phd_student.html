@@ -3,30 +3,163 @@
 
 {% block middle %}
   
-{% crispy form %} 
+    <!-- phd details -->
+    {% crispy form %} 
 
-{% if form.instance.photo %}
-    <div class="current-photo">
-        <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px; float: left;">
-        <div style="clear: both;"></div>
-    </div>
-{% endif %}
-
-{% if perms.myprofile.is_secreteriat %}
-    {% if form.instance.pk %}
-        <p></p>
-        <button type="button" class="btn btn-danger" onclick="delete_obj()">
-            Διαγραφή
-        </button>
-        <script>
-            function delete_obj() {
-                var result = confirm("Είστε σίγουροι;");
-                if (result) {
-                    window.location.replace('{% url 'myprofile:sec_delete_phd_student' form.instance.pk %}');
-                }
-            }
-        </script>  
+    {% if form.instance.photo %}
+        <div class="current-photo">
+            <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 200px; max-height: 200px; float: left;">
+            <div style="clear: both;"></div>
+        </div>
     {% endif %}
-{% endif %}
+
+
+    {% if form.instance.pk %}
+        
+        <!-- phd journals -->
+        <script>
+            $(document).ready(function() {
+                $('#journalpublication').DataTable({
+                    "lengthChange": false,
+                    "pageLength": 100
+                });
+            });
+        </script>
+        <div class="row">
+            <div class="col">
+                <h3>Δημοσιεύσεις Περιοδικών</h3>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'phds:sec_create_journal' %}" class="btn btn-primary">+ Νέα Δημοσίευση</a>
+            </div>
+        </div>
+        {% if journals %}
+            <table id = "journalpublication" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Τίτλος</th>
+                        <th scope="col">Διδάκτορας</th>
+                        <th scope="col">Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for journal in journals %}
+                        <tr>
+                            <td>{{ journal.title }}</td>
+                            <td>{{ journal.candidate.display_name }}</td>
+                            <td>
+                                <a href="{% url 'phds:sec_edit_journal' journal.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Δεν έχουν καταχωρηθεί Δημοσιεύσεις Περιοδικών</p>
+        {% endif %}
+
+        <!-- phd conferences -->
+        <script>
+            $(document).ready(function() {
+                $('#conferencepublication').DataTable({
+                    "lengthChange": false,
+                    "pageLength": 100
+                });
+            });
+        </script>
+        <div class="row">
+            <div class="col">
+                <h3>Δημοσιεύσεις Συνεδριών</h3>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'phds:sec_create_conference' %}" class="btn btn-primary">+ Νέα Δημοσίευση</a>
+            </div>
+        </div>
+        {% if conferences %}
+            <table id = "conferencepublication" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Τίτλος</th>
+                        <th scope="col">Διδάκτορας</th>
+                        <th scope="col">Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for conference in conferences %}
+                        <tr>
+                            <td>{{ conference.title }}</td>
+                            <td>{{ conferences.candidate.display_name }}</td>
+                            <td>
+                                <a href="{% url 'phds:sec_edit_conference' conference.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Δεν έχουν καταχωρηθεί Δημοσιεύσεις Συνεδριών</p>
+        {% endif %}
+
+        <!-- phd teachings -->
+        <script>
+            $(document).ready(function() {
+                $('#teaching').DataTable({
+                    "lengthChange": false,
+                    "pageLength": 100
+                });
+            });
+        </script>
+        <div class="row">
+            <div class="col">
+                <h3>Επικουρικό Έργο</h3>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'phds:sec_create_teaching' %}" class="btn btn-primary">+ Νέο Έργο</a>
+            </div>
+        </div>
+        {% if teachings %}
+            <table id = "teaching" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Μάθημα</th>
+                        <th scope="col">Τύπος Διδασκαλίας</th>
+                        <th scope="col">Διδάκτορας</th>
+                        <th scope="col">Ενέργειες</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for teaching in teachings %}
+                        <tr>
+                            <td>{{ teaching.course }}</td>
+                            <td>{{ teaching.teaching_type }}</td>
+                            <td>{{ teaching.candidate.display_name }}</td>
+                            <td>
+                                <a href="{% url 'phds:sec_edit_teaching' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Δεν έχουν καταχωρηθεί Έργα</p>
+        {% endif %}
+
+        <!-- delete phd -->
+        {% if perms.myprofile.is_secreteriat %}
+            <p></p>
+            <button type="button" class="btn btn-danger" onclick="delete_obj()">
+                Διαγραφή Διδάκτορα
+            </button>
+            <script>
+                function delete_obj() {
+                    var result = confirm("Είστε σίγουροι;");
+                    if (result) {
+                        window.location.replace('{% url 'myprofile:sec_delete_phd_student' form.instance.pk %}');
+                    }
+                }
+            </script>  
+        {% endif %}
+
+    {% endif %}
 
 {% endblock %}

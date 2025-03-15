@@ -8,25 +8,25 @@ from datetime import date
 class JournalPublication(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
 
-    title = models.TextField()
-    authors_list = models.TextField()
-    has_supervisor = models.BooleanField()
-    journal = models.CharField()
-    publisher = models.CharField()
-    volume = models.CharField()
-    issue = models.CharField()
-    year = models.IntegerField()
-    doi = models.CharField()
+    title = models.TextField(null=True)
+    authors_list = models.TextField(null=True)
+    has_supervisor = models.BooleanField(null=True)
+    journal = models.CharField(null=True)
+    publisher = models.CharField(null=True)
+    volume = models.CharField(null=True)
+    issue = models.CharField(null=True)
+    year = models.IntegerField(null=True)
+    doi = models.CharField(null=True)
 
 class ConferencePublication(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
 
-    title = models.TextField()
-    authors_list = models.TextField()	
-    conference_name = models.CharField()	
-    venue = models.CharField()
-    year = models.IntegerField()
-    has_supervisor = models.BooleanField()
+    title = models.TextField(null=True)
+    authors_list = models.TextField(null=True)	
+    conference_name = models.CharField(null=True)	
+    venue = models.CharField(null=True)
+    year = models.IntegerField(null=True)
+    has_supervisor = models.BooleanField(null=True)
 
 class Teaching(models.Model):
 
@@ -46,12 +46,12 @@ class Teaching(models.Model):
     faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
     
-    year = models.IntegerField()
-    teaching_type = models.CharField(max_length=50, choices=TEACHING_TYPES)
-    hours_per_week = models.IntegerField()	
-    no_weeks = models.IntegerField()	
-    have_contract = models.BooleanField()
-    comments = models.TextField()
+    year = models.IntegerField(null=True)
+    teaching_type = models.CharField(null=True, choices=TEACHING_TYPES)
+    hours_per_week = models.IntegerField(null=True)	
+    no_weeks = models.IntegerField(null=True)	
+    have_contract = models.BooleanField(null=True)
+    comments = models.TextField(null=True)
 
     approved_by_faculty = models.BooleanField(null=True, default=False)
     approved_date = models.DateField(null=True, blank=True)

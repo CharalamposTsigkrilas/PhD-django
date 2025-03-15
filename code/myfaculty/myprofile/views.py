@@ -13,6 +13,7 @@ from django.views import generic
 from dal import autocomplete
 from sis import sis
 from theses.models import Thesis
+from phds.models import JournalPublication, ConferencePublication, Teaching
 
 # Create your views here.
 
@@ -271,6 +272,13 @@ class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.Upda
     
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["journals"] = JournalPublication.objects.filter(candidate=self.object)
+        context["conferences"] = ConferencePublication.objects.filter(candidate=self.object)
+        context["teachings"] = Teaching.objects.filter(candidate=self.object)
+        return context
 
 class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
     model = PhdStudent
@@ -306,7 +314,7 @@ class staff_list_phd_students(UserPassesTestMixin, LoginRequiredMixin, generic.L
 
 class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.DetailView):
     model = PhdStudent
-    template_name = "myprofile/phdstudentprofile.html"
+    template_name = "myprofile/staff_spectate_phd_student.html"
     context_object_name = "phdstudent"
     
     def test_func(self):
@@ -314,5 +322,8 @@ class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generi
     
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context['form'] = StaffSpectatePhdStudentFormRestricted(instance=self.object) 
+        context['form'] = StaffSpectatePhdStudentFormRestricted(instance=self.object)
+        context["journals"] = JournalPublication.objects.filter(candidate=self.object)
+        context["conferences"] = ConferencePublication.objects.filter(candidate=self.object)
+        context["teachings"] = Teaching.objects.filter(candidate=self.object)
         return context

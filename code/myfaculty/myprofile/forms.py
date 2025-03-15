@@ -234,6 +234,18 @@ SEC_EDIT_PHD_STUDENT_LAYOUT = Layout(
             ]
         )
 
+STAFF_SPECTATE_PHD_STUDENT_LAYOUT = Layout(
+            Row(
+               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               css_class="row"),
+            *[  
+                Row(
+                    Div(Field(field), css_class='col-md-12'),
+                    css_class="row"
+                ) for field in PHD_STUDENT_FIELDS
+            ]
+        )
+
             # Row(
             #     Div(Field('reg_num'),css_class = 'col-md-12'),
             #     css_class="row"),
@@ -418,3 +430,6 @@ class StaffSpectatePhdStudentFormRestricted(ModelForm):
         
         for k in PHD_STUDENT_FIELDS:
             self.fields[k].disabled = True
+        
+        self.helper = FormHelper()
+        self.helper.layout = STAFF_SPECTATE_PHD_STUDENT_LAYOUT
