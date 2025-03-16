@@ -6,7 +6,7 @@ from django.views import generic
 from myprofile.checks import is_phd_student, is_secreteriat, is_staff_member
 from myprofile.models import StaffMember, PhdStudent
 from django.contrib.auth.decorators import login_required, user_passes_test
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy, reverse
 from .forms import *
 
 # Create your views here.
@@ -224,7 +224,7 @@ class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMi
     model = Teaching
     template_name = "phds/staff_spectate_teaching_accept_reject.html"
     form_class = StaffSpectateAcceptRejectTeachingFormRestricted
-    success_url = reverse_lazy('phds:staff_list_teachings')
+    # success_url = reverse_lazy('phds:staff_list_teachings')
 
     def test_func(self):
         return is_staff_member(self.request.user)
@@ -233,6 +233,14 @@ class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMi
         kwargs = super().get_form_kwargs()
         kwargs["user"] = self.request.user
         return kwargs
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:staff_spectate_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
     
 
 
@@ -254,26 +262,57 @@ class sec_create_journal(UserPassesTestMixin, LoginRequiredMixin, generic.Create
     model = JournalPublication
     template_name = "phds/sec_edit_journal.html"
     form_class = SecCreateJournalForm
-    success_url = reverse_lazy('phds:sec_list_journals')
+    # success_url = reverse_lazy('phds:sec_list_journals')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        candidate_id = self.kwargs.get("pk")
+        kwargs["candidate"] = get_object_or_404(PhdStudent, id=candidate_id)
+        return kwargs
 
 class sec_edit_journal(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = JournalPublication
     template_name = "phds/sec_edit_journal.html"
     form_class = SecEditJournalForm
-    success_url = reverse_lazy('phds:sec_list_journals')
+    # success_url = reverse_lazy('phds:sec_list_journals')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs["candidate"] = self.object.candidate
+    #     return kwargs
 
 @login_required
 @user_passes_test(is_secreteriat)
 def sec_delete_journal(request, pk):
     obj = get_object_or_404(JournalPublication, pk=pk)
+    candidate = obj.candidate    
     obj.delete()
-    return redirect('phds:sec_list_journals')
+    if candidate:
+        return redirect('myprofile:sec_edit_phd_student', pk=candidate.id)
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))
     
     
     # Conferences
@@ -292,26 +331,57 @@ class sec_create_conference(UserPassesTestMixin, LoginRequiredMixin, generic.Cre
     model = ConferencePublication
     template_name = "phds/sec_edit_conference.html"
     form_class = SecCreateConferenceForm
-    success_url = reverse_lazy('phds:sec_list_conferences')
+    # success_url = reverse_lazy('phds:sec_list_conferences')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        candidate_id = self.kwargs.get("pk")
+        kwargs["candidate"] = get_object_or_404(PhdStudent, id=candidate_id)
+        return kwargs
 
 class sec_edit_conference(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = ConferencePublication
     template_name = "phds/sec_edit_conference.html"
     form_class = SecEditConferenceForm
-    success_url = reverse_lazy('phds:sec_list_conferences')
+    # success_url = reverse_lazy('phds:sec_list_conferences')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs["candidate"] = self.object.candidate
+    #     return kwargs
 
 @login_required
 @user_passes_test(is_secreteriat)
 def sec_delete_conference(request, pk):
     obj = get_object_or_404(ConferencePublication, pk=pk)
+    candidate = obj.candidate    
     obj.delete()
-    return redirect('phds:sec_list_conferences')
+    if candidate:
+        return redirect('myprofile:sec_edit_phd_student', pk=candidate.id)
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))
 
 
     # Teaching
@@ -330,23 +400,54 @@ class sec_create_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Creat
     model = Teaching
     template_name = "phds/sec_edit_teaching.html"
     form_class = SecCreateTeachingForm
-    success_url = reverse_lazy('phds:sec_list_teachings')
+    # success_url = reverse_lazy('phds:sec_list_teachings')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        candidate_id = self.kwargs.get("pk")
+        kwargs["candidate"] = get_object_or_404(PhdStudent, id=candidate_id)
+        return kwargs
 
 class sec_edit_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
     model = Teaching
     template_name = "phds/sec_edit_teaching.html"
     form_class = SecEditTeachingForm
-    success_url = reverse_lazy('phds:sec_list_teachings')
+    # success_url = reverse_lazy('phds:sec_list_teachings')
 
     def test_func(self):
         return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    # def get_form_kwargs(self):
+    #     kwargs = super().get_form_kwargs()
+    #     kwargs["candidate"] = self.object.candidate
+    #     return kwargs
 
 @login_required
 @user_passes_test(is_secreteriat)
 def sec_delete_teaching(request, pk):
     obj = get_object_or_404(Teaching, pk=pk)
+    candidate = obj.candidate    
     obj.delete()
-    return redirect('phds:sec_list_teachings')
+    if candidate:
+        return redirect('myprofile:sec_edit_phd_student', pk=candidate.id)
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))

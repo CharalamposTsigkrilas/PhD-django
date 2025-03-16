@@ -319,10 +319,15 @@ class SecCreateJournalForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_CREATE_JOURNAL_LAYOUT
+
+        self.fields["candidate"].disabled = True  
+        if candidate:  
+            self.fields["candidate"].initial = candidate
 
 class SecEditJournalForm(ModelForm):
 
@@ -332,10 +337,13 @@ class SecEditJournalForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_EDIT_JOURNAL_LAYOUT
+
+        self.fields["candidate"].disabled = True
 
 class StaffSpectateJournalFormRestricted(ModelForm):
 
@@ -386,10 +394,15 @@ class SecCreateConferenceForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_CREATE_CONFERENCE_LAYOUT
+
+        self.fields["candidate"].disabled = True  
+        if candidate:  
+            self.fields["candidate"].initial = candidate
 
 class SecEditConferenceForm(ModelForm):
 
@@ -399,10 +412,12 @@ class SecEditConferenceForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_EDIT_CONFERENCE_LAYOUT
+        self.fields["candidate"].disabled = True
 
 class StaffSpectateConferenceFormRestricted(ModelForm):
 
@@ -458,13 +473,20 @@ class SecCreateTeachingForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_CREATE_TEACHING_LAYOUT
 
+        self.fields["candidate"].disabled = True  
         self.fields["faculty"].disabled = True
         self.fields["approved_date"].disabled = True
+
+        if candidate:  
+            self.fields["candidate"].initial = candidate
+        if candidate.supervisor:
+            self.fields["faculty"].initial = candidate.supervisor
 
 class SecEditTeachingForm(ModelForm):
 
@@ -474,11 +496,13 @@ class SecEditTeachingForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
+        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
         self.helper.layout = SEC_EDIT_TEACHING_LAYOUT
 
+        self.fields["candidate"].disabled = True
         self.fields["faculty"].disabled = True
         self.fields["approved_date"].disabled = True
 
