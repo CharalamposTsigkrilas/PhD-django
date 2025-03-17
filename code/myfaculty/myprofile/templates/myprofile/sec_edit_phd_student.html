@@ -40,7 +40,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Τίτλος</th>
-                        <th scope="col">Διδάκτορας</th>
                         <th scope="col">Ενέργειες</th>
                     </tr>
                 </thead>
@@ -48,7 +47,6 @@
                     {% for journal in journals %}
                         <tr>
                             <td>{{ journal.title }}</td>
-                            <td>{{ journal.candidate.display_name }}</td>
                             <td>
                                 <a href="{% url 'phds:sec_edit_journal' journal.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                             </td>
@@ -84,7 +82,6 @@
                 <thead>
                     <tr>
                         <th scope="col">Τίτλος</th>
-                        <th scope="col">Διδάκτορας</th>
                         <th scope="col">Ενέργειες</th>
                     </tr>
                 </thead>
@@ -92,7 +89,6 @@
                     {% for conference in conferences %}
                         <tr>
                             <td>{{ conference.title }}</td>
-                            <td>{{ conference.candidate.display_name }}</td>
                             <td>
                                 <a href="{% url 'phds:sec_edit_conference' conference.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                             </td>
@@ -129,7 +125,6 @@
                     <tr>
                         <th scope="col">Μάθημα</th>
                         <th scope="col">Τύπος Διδασκαλίας</th>
-                        <th scope="col">Διδάκτορας</th>
                         <th scope="col">Ενέργειες</th>
                     </tr>
                 </thead>
@@ -138,7 +133,6 @@
                         <tr>
                             <td>{{ teaching.course }}</td>
                             <td>{{ teaching.teaching_type }}</td>
-                            <td>{{ teaching.candidate.display_name }}</td>
                             <td>
                                 <a href="{% url 'phds:sec_edit_teaching' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
                             </td>

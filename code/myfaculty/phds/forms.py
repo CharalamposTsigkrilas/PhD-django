@@ -12,18 +12,6 @@ PHD_CONFERENCE_FIELDS = ['title', 'authors_list', 'conference_name', 'venue', 'y
 PHD_CREATE_TEACHING_FIELDS = ['faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments']
 PHD_SPECTATE_TEACHING_FIELDS = ['faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
 
-# SEC_JOURNAL_FIELDS = ['candidate', 'title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
-# SEC_CONFERENCE_FIELDS = ['candidate', 'title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
-# SEC_TEACHING_FIELDS = ['candidate', 'faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
-
-# STAFF_JOURNAL_FIELDS = ['candidate', 'title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
-# STAFF_CONFERENCE_FIELDS = ['candidate', 'title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
-# STAFF_TEACHING_FIELDS = ['candidate', 'faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
-
-# PHD_JOURNAL_FIELDS = ['title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
-# PHD_CONFERENCE_FIELDS = ['title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
-# PHD_TEACHING_FIELDS = ['faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
-
 
 LABELS = {
     'candidate' : 'Υποψήφιος Διδάκτορας',
@@ -337,7 +325,6 @@ class SecEditJournalForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
-        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
@@ -412,7 +399,6 @@ class SecEditConferenceForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
-        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
@@ -496,7 +482,6 @@ class SecEditTeachingForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
-        # candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
