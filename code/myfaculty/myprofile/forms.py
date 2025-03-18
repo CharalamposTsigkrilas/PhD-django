@@ -213,106 +213,166 @@ SEC_CREATE_PHD_STUDENT_LAYOUT = Layout(
                Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_STUDENT_FIELDS
-            ]
-        )
+            Row(
+                Div(Field('reg_num'),css_class = 'col-md-6'),
+                Div(Field('email'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('given_name'),css_class = 'col-md-4'),
+                Div(Field('surname'),css_class = 'col-md-4'),
+                Div(Field('fathers_name'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('date_of_birth'),css_class = 'col-md-4'),
+                Div(Field('external_email'),css_class = 'col-md-4'),
+                Div(Field('gender'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('mobile_phone'),css_class = 'col-md-4'),
+                Div(Field('home_phone'),css_class = 'col-md-4'),
+                Div(Field('home_address_street'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('subject_gr'),css_class = 'col-md-6'),
+                Div(Field('subject_en'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('inscription_date'),css_class = 'col-md-6'),
+                Div(Field('inscription_ref'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('cv_gr'),css_class = 'col-md-6'),
+                Div(Field('cv_en'),css_class = 'col-md-6'),
+                css_class="row"),           
+            Row(
+                Div(Field('photo'),css_class = 'col-md-6'),
+                Div(Field('scopus_id'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('supervisor'),css_class = 'col-md-4'),
+                Div(Field('member1'),css_class = 'col-md-4'),
+                Div(Field('member2'),css_class = 'col-md-4'),
+                css_class="row"),
+            )
 
 SEC_EDIT_PHD_STUDENT_LAYOUT = Layout(
             Row(
                Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_STUDENT_FIELDS
-            ]
-        )
+            Row(
+                # Photo Preview (Left Side)
+                Div(
+                    HTML("""
+                        {% if form.instance.photo %}
+                            <div class="current-photo">
+                                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 400px; max-height: 400px;">
+                            </div>
+                        {% endif %}
+                    """),
+                    css_class="col-md-6 d-flex align-items-center"
+                ),
+            ),
+            Row(
+                Div(Field('reg_num'),css_class = 'col-md-6'),
+                Div(Field('email'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('given_name'),css_class = 'col-md-4'),
+                Div(Field('surname'),css_class = 'col-md-4'),
+                Div(Field('fathers_name'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('date_of_birth'),css_class = 'col-md-4'),
+                Div(Field('external_email'),css_class = 'col-md-4'),
+                Div(Field('gender'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('mobile_phone'),css_class = 'col-md-4'),
+                Div(Field('home_phone'),css_class = 'col-md-4'),
+                Div(Field('home_address_street'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('subject_gr'),css_class = 'col-md-6'),
+                Div(Field('subject_en'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('inscription_date'),css_class = 'col-md-6'),
+                Div(Field('inscription_ref'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('cv_gr'),css_class = 'col-md-6'),
+                Div(Field('cv_en'),css_class = 'col-md-6'),
+                css_class="row"),           
+            Row(
+                Div(Field('photo'),css_class = 'col-md-6'),
+                Div(Field('scopus_id'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('supervisor'),css_class = 'col-md-4'),
+                Div(Field('member1'),css_class = 'col-md-4'),
+                Div(Field('member2'),css_class = 'col-md-4'),
+                css_class="row"),
+            )
 
 STAFF_SPECTATE_PHD_STUDENT_LAYOUT = Layout(
             Row(
                Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
                css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_STUDENT_FIELDS
-            ]
-        )
-
-            # Row(
-            #     Div(Field('reg_num'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('email'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('given_name'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('surname'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('fathers_name'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('date_of_birth'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('external_email'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('gender'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('mobile_phone'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('home_phone'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('home_address_street'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('subject_gr'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('subject_en'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('inscription_date'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('inscription_ref'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('cv_gr'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('cv_en'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('scopus_id'),css_class = 'col-md-12'),
-            #     css_class="row"),            
-            # Row(
-            #     Div(Field('supervisor'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('member1'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('member2'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('photo'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # )
+            Row(
+                # Photo Preview (Left Side)
+                Div(
+                    HTML("""
+                        {% if form.instance.photo %}
+                            <div class="current-photo">
+                                <img src="{{ form.instance.photo.url }}" alt="Current Photo" style="max-width: 400px; max-height: 400px;">
+                            </div>
+                        {% endif %}
+                    """),
+                    css_class="col-md-6 d-flex align-items-center"
+                ),
+            ),
+            Row(
+                Div(Field('reg_num'),css_class = 'col-md-6'),
+                Div(Field('email'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('given_name'),css_class = 'col-md-4'),
+                Div(Field('surname'),css_class = 'col-md-4'),
+                Div(Field('fathers_name'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('date_of_birth'),css_class = 'col-md-4'),
+                Div(Field('external_email'),css_class = 'col-md-4'),
+                Div(Field('gender'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('mobile_phone'),css_class = 'col-md-4'),
+                Div(Field('home_phone'),css_class = 'col-md-4'),
+                Div(Field('home_address_street'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('subject_gr'),css_class = 'col-md-6'),
+                Div(Field('subject_en'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('inscription_date'),css_class = 'col-md-6'),
+                Div(Field('inscription_ref'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('cv_gr'),css_class = 'col-md-6'),
+                Div(Field('cv_en'),css_class = 'col-md-6'),
+                css_class="row"),           
+            Row(
+                Div(Field('photo'),css_class = 'col-md-6'),
+                Div(Field('scopus_id'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('supervisor'),css_class = 'col-md-4'),
+                Div(Field('member1'),css_class = 'col-md-4'),
+                Div(Field('member2'),css_class = 'col-md-4'),
+                css_class="row"),
+            )
 
 
 class StaffForm(ModelForm):
