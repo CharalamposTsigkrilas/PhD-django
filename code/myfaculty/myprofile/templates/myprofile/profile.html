@@ -1,5 +1,6 @@
 {% extends 'myprofile/page.html' %}
 {% load crispy_forms_tags %}
+{% load profile_tags %}
 
 {% block middle %}
 {{ form.media }}
@@ -8,6 +9,29 @@
     {% csrf_token %}
     {% crispy form %} 
 </form>
+
+{% if request.user|is_staff_member %}
+    {% if unchecked_teachings %}
+        <br></br>
+        <div class="alert alert-danger" role="alert">
+            Έχετε μη εγκεκριμένο Επικουρικό Έργο που απαιτεί έλεγχο!
+        </div>
+        <br></br>
+        <div class="alert alert-danger" role="alert">
+            Έχετε μη εγκεκριμένο Επικουρικό Έργο που απαιτεί έλεγχο!
+            Δείτε <a href="{% url 'phds:staff_list_teachings' %}" class="alert-link">εδώ</a>
+        </div>
+    {% endif %}
+    <br></br>
+    <div>
+        Δείτε τη λίστα με τα <a href="{% url 'phds:staff_list_teachings' %}" class="alert-link">Επικουρικά Έργα</a> που είστε επιτηρητής
+    </div>
+    <br></br>
+    <div>
+        Δείτε τη λίστα με τα Επικουρικά Έργα που είστε επιτηρητής
+        <a href="{% url 'phds:staff_list_teachings' %}" class="btn btn-primary">Προβολή</a>
+    </div>
+{% endif %}
 
 {% if perms.myprofile.is_secreteriat %}
 {% if form.instance.pk %}

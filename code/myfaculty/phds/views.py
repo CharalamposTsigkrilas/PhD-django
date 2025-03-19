@@ -198,6 +198,16 @@ class staff_spectate_teaching_accept_reject(UserPassesTestMixin, LoginRequiredMi
             previous_url = self.request.META.get("HTTP_REFERER")
             return previous_url
     
+class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
+    template_name = "phds/staff_list_teachings.html"
+    context_object_name = "teachings"
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_queryset(self):
+        staff_member = StaffMember.objects.get(user=self.request.user)
+        return Teaching.objects.filter(faculty=staff_member)
 
 
 # sec views --> Secreatary CRUD everything

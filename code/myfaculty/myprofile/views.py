@@ -30,17 +30,17 @@ def render_anauthorized_staff(request):
 @login_required
 def staff_profile(request):
     profile = StaffMember.objects.get(user = request.user)
+    unchecked_teachings = Teaching.objects.filter(faculty=profile, approved_by_faculty=False).exists()
+    
     if request.method == 'POST':
         form = StaffFormRestricted(request.POST, instance = profile)
 
         if form.is_valid():
             form.save()
             return reverse_lazy('myprofile:index')
-        else:
-            return render(request, 'myprofile/profile.html', context = {'form' : form})
     else:
         form = StaffFormRestricted(instance=profile)
-        return render(request, 'myprofile/profile.html', context={'form' : form})
+    return render(request, 'myprofile/profile.html', {'form': form, 'unchecked_teachings': unchecked_teachings})
 
 @login_required
 def associate_profile(request):

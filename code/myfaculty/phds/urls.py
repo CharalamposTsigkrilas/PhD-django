@@ -21,6 +21,7 @@ urlpatterns = [
     path('staff/conference/<int:pk>/details', views.staff_spectate_conference.as_view(), name='staff_spectate_conference'),
     
     path('staff/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject.as_view(), name='staff_spectate_teaching_accept_reject'),
+    path('staff/teachings', views.staff_list_teachings.as_view(), name='staff_list_teachings'),
 
     
     path('phd/journals', views.phd_list_journals.as_view(), name='phd_list_journals'),
