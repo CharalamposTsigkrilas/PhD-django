@@ -37,240 +37,391 @@ LABELS = {
     'approved_date' : 'Ημερομηνία Έγκρισης'
 }
 
+
+# Journal Layouts
+
 PHD_CREATE_JOURNAL_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"
-            ),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_JOURNAL_FIELDS
-            ]
-        )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('title'),css_class = 'col-md-6'),                
+                Div(Field('authors_list'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('journal'),css_class = 'col-md-6'),
+                Div(Field('publisher'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('volume'),css_class = 'col-md-4'),
+                Div(Field('issue'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'),css_class = 'col-md-6'),
+                Div(Field('doi'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+PHD_SPECTATE_JOURNAL_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('title'),css_class = 'col-md-6'),                
+                Div(Field('authors_list'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('journal'),css_class = 'col-md-6'),
+                Div(Field('publisher'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('volume'),css_class = 'col-md-4'),
+                Div(Field('issue'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'),css_class = 'col-md-6'),
+                Div(Field('doi'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 SEC_CREATE_JOURNAL_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"
-            ),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in JOURNAL_FIELDS
-            ]
-        )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'),css_class = 'col-md-6'),                
+                Div(Field('authors_list'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('journal'),css_class = 'col-md-6'),
+                Div(Field('publisher'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('volume'),css_class = 'col-md-4'),
+                Div(Field('issue'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'),css_class = 'col-md-6'),
+                Div(Field('doi'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 SEC_EDIT_JOURNAL_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
-               css_class="row"
-            ),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in JOURNAL_FIELDS
-            ]
-        )
-            # Journal
-            # Row(
-            #     Div(Field('candidate'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('title'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('authors_list'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('has_supervisor'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('journal'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('publisher'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('volume'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('issue'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('year'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('doi'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'),css_class = 'col-md-6'),                
+                Div(Field('authors_list'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('journal'),css_class = 'col-md-6'),
+                Div(Field('publisher'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('volume'),css_class = 'col-md-4'),
+                Div(Field('issue'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'),css_class = 'col-md-6'),
+                Div(Field('doi'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+STAFF_SPECTATE_JOURNAL_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'),css_class = 'col-md-6'),                
+                Div(Field('authors_list'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('journal'),css_class = 'col-md-6'),
+                Div(Field('publisher'),css_class = 'col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('volume'),css_class = 'col-md-4'),
+                Div(Field('issue'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'),css_class = 'col-md-6'),
+                Div(Field('doi'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+
+# Conference Layouts
 
 PHD_CREATE_CONFERENCE_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_CONFERENCE_FIELDS
-            ]    
-        )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'), css_class='col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'), css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('title'), css_class='col-md-6'),
+                Div(Field('authors_list'), css_class='col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('conference_name'), css_class='col-md-4'),
+                Div(Field('venue'), css_class='col-md-4'),
+                Div(Field('year'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            )
+
+PHD_SPECTATE_CONFERENCE_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('title'), css_class='col-md-6'),
+                Div(Field('authors_list'), css_class='col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('conference_name'), css_class='col-md-4'),
+                Div(Field('venue'), css_class='col-md-4'),
+                Div(Field('year'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            )
 
 SEC_CREATE_CONFERENCE_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in CONFERENCE_FIELDS
-            ]    
-        )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'), css_class='col-md-6'),
+                Div(Field('authors_list'), css_class='col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('conference_name'), css_class='col-md-4'),
+                Div(Field('venue'), css_class='col-md-4'),
+                Div(Field('year'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            )
 
 SEC_EDIT_CONFERENCE_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in CONFERENCE_FIELDS
-            ]    
-        )
-            # Conference
-            # Row(
-            #     Div(Field('candidate'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('title'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('authors_list'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('conference_name'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('venue'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('year'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('has_supervisor'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # )
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'), css_class='col-md-6'),
+                Div(Field('authors_list'), css_class='col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('conference_name'), css_class='col-md-4'),
+                Div(Field('venue'), css_class='col-md-4'),
+                Div(Field('year'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            )
+
+STAFF_SPECTATE_CONFERENCE_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('title'), css_class='col-md-6'),
+                Div(Field('authors_list'), css_class='col-md-6'),
+                css_class="row"),
+            Row(
+                Div(Field('conference_name'), css_class='col-md-4'),
+                Div(Field('venue'), css_class='col-md-4'),
+                Div(Field('year'), css_class='col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('has_supervisor'), css_class='col-md-4'),
+                css_class="row"),
+            )
+
+
+# Teaching Layouts
 
 PHD_CREATE_TEACHING_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in PHD_CREATE_TEACHING_FIELDS
-            ]
-        )
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('faculty'),css_class = 'col-md-4'),
+                Div(Field('course'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            )
+
+PHD_SPECTATE_TEACHING_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('faculty'),css_class = 'col-md-4'),
+                Div(Field('course'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('approved_by_faculty'),css_class = 'col-md-6'),
+                Div(Field('approved_date'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 SEC_CREATE_TEACHING_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in TEACHING_FIELDS
-            ]
-        )
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('course'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('approved_by_faculty'),css_class = 'col-md-6'),
+                Div(Field('approved_date'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 SEC_EDIT_TEACHING_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in TEACHING_FIELDS
-            ]
-        )
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('course'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('approved_by_faculty'),css_class = 'col-md-6'),
+                Div(Field('approved_date'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 STAFF_SPECTATE_TEACHING_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in TEACHING_FIELDS
-            ]
-        ) 
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('course'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('approved_by_faculty'),css_class = 'col-md-6'),
+                Div(Field('approved_date'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 STAFF_EDIT_TEACHING_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
-               Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
-               css_class="row"),
-            *[  
-                Row(
-                    Div(Field(field), css_class='col-md-12'),
-                    css_class="row"
-                ) for field in TEACHING_FIELDS
-            ]
-        )   
-            # Teaching
-            # Row(
-            #     Div(Field('candidate'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('faculty'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('course'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('year'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('teaching_type'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('hours_per_week'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('no_weeks'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('have_contract'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('comments'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('approved_by_faculty'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # Row(
-            #     Div(Field('approved_date'),css_class = 'col-md-12'),
-            #     css_class="row"),
-            # )
+                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('course'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('teaching_type'),css_class = 'col-md-3'),
+                Div(Field('hours_per_week'),css_class = 'col-md-3'),
+                Div(Field('no_weeks'),css_class = 'col-md-3'),
+                Div(Field('have_contract'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('approved_by_faculty'),css_class = 'col-md-6'),
+                Div(Field('approved_date'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
 
 # Journal Forms 
 class PhdCreateJournalForm(ModelForm):
@@ -295,6 +446,9 @@ class PhdSpectateJournalFormRestricted(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = PHD_SPECTATE_JOURNAL_LAYOUT
 
         for k in PHD_JOURNAL_FIELDS:
             self.fields[k].disabled = True
@@ -342,6 +496,9 @@ class StaffSpectateJournalFormRestricted(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.helper = FormHelper()
+        self.helper.layout = STAFF_SPECTATE_JOURNAL_LAYOUT
+
         for k in JOURNAL_FIELDS:
             self.fields[k].disabled = True
 
@@ -369,6 +526,9 @@ class PhdSpectateConferenceFormRestricted(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = PHD_SPECTATE_CONFERENCE_LAYOUT
 
         for k in PHD_CONFERENCE_FIELDS:
             self.fields[k].disabled = True
@@ -415,6 +575,9 @@ class StaffSpectateConferenceFormRestricted(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
 
+        self.helper = FormHelper()
+        self.helper.layout = STAFF_SPECTATE_CONFERENCE_LAYOUT
+
         for k in CONFERENCE_FIELDS:
             self.fields[k].disabled = True
 
@@ -447,6 +610,9 @@ class PhdSpectateTeachingFormRestricted(ModelForm):
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = PHD_SPECTATE_TEACHING_LAYOUT
 
         for k in PHD_SPECTATE_TEACHING_FIELDS:
             self.fields[k].disabled = True
