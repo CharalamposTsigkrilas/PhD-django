@@ -150,3 +150,6 @@ code/myfaculty/default.json
 
 # Passwords file
 code/myfaculty/initialization.py
+
+# Mail credential files folder
+code/myfaculty/mailer/auth/
