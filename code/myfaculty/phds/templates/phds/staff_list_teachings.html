@@ -34,7 +34,7 @@
                         <td>{{ teaching.teaching_type }}</td>
                         <td>{{ teaching.approved_by_faculty }}</td>
                         <td>
-                            <a href="{% url 'phds:staff_spectate_teaching_accept_reject' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                            <a href="{% url 'phds:staff_spectate_teaching_accept_reject_from_list' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
                         </td>
                     </tr>
                 {% endfor %}

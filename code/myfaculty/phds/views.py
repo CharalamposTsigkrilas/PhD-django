@@ -209,6 +209,21 @@ class staff_list_teachings(UserPassesTestMixin, LoginRequiredMixin, generic.List
         staff_member = StaffMember.objects.get(user=self.request.user)
         return Teaching.objects.filter(faculty=staff_member)
 
+class staff_spectate_teaching_accept_reject_from_list(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):   
+    model = Teaching
+    template_name = "phds/staff_spectate_teaching_accept_reject.html"
+    form_class = StaffSpectateAcceptRejectTeachingFormRestricted
+    success_url = reverse_lazy('phds:staff_list_teachings')
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+    
+
 
 # sec views --> Secreatary CRUD everything
     

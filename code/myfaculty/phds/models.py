@@ -62,7 +62,5 @@ class Teaching(models.Model):
         
         if self.approved_by_faculty == True:
             self.approved_date = date.today()
-        else:
-            self.approved_date = None
         
         super().save(*args, **kwargs)
