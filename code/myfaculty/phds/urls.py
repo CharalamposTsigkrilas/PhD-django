@@ -22,7 +22,7 @@ urlpatterns = [
     
     path('staff/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject.as_view(), name='staff_spectate_teaching_accept_reject'),
     path('staff/teachings', views.staff_list_teachings.as_view(), name='staff_list_teachings'),
-    path('staff/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject_from_list.as_view(), name='staff_spectate_teaching_accept_reject_from_list'),
+    path('staff/teachings/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject_from_list.as_view(), name='staff_spectate_teaching_accept_reject_from_list'),
 
     
     path('phd/journals', views.phd_list_journals.as_view(), name='phd_list_journals'),

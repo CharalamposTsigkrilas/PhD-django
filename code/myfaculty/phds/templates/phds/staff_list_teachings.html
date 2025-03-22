@@ -31,8 +31,18 @@
                     <tr>
                         <td>{{ teaching.course }}</td>
                         <td>{{ teaching.candidate }}</td>
-                        <td>{{ teaching.teaching_type }}</td>
-                        <td>{{ teaching.approved_by_faculty }}</td>
+                        <td>{{ teaching.get_teaching_type_display }}</td>
+                        <td> 
+                            {% if teaching.approved_by_faculty == True %}
+                                <div class="alert alert-success p-1 m-0 d-inline-block w-100" role="alert">
+                                    Ναι{% comment %} {{ teaching.approved_by_faculty }} {% endcomment %}
+                                </div>
+                            {% else %}
+                                <div class="alert alert-danger p-1 m-0 d-inline-block w-100" role="alert">
+                                    Όχι{% comment %} {{ teaching.approved_by_faculty }} {% endcomment %}
+                                </div>
+                            {% endif %}
+                        </td>
                         <td>
                             <a href="{% url 'phds:staff_spectate_teaching_accept_reject_from_list' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
                         </td>

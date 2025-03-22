@@ -31,7 +31,7 @@
                 {% for teaching in teachings %}
                     <tr>
                         <td>{{ teaching.course }}</td>
-                        <td>{{ teaching.teaching_type }}</td>
+                        <td>{{ teaching.get_teaching_type_display }}</td>
                         <td>
                             <a href="{% url 'phds:phd_spectate_teaching' teaching.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
                         </td>
