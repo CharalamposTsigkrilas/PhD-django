@@ -35,11 +35,11 @@
                         <td> 
                             {% if teaching.approved_by_faculty == True %}
                                 <div class="alert alert-success p-1 m-0 d-inline-block w-100" role="alert">
-                                    Ναι{% comment %} {{ teaching.approved_by_faculty }} {% endcomment %}
+                                    Ναι<!-- {{ teaching.approved_by_faculty }} -->
                                 </div>
                             {% else %}
                                 <div class="alert alert-danger p-1 m-0 d-inline-block w-100" role="alert">
-                                    Όχι{% comment %} {{ teaching.approved_by_faculty }} {% endcomment %}
+                                    Όχι<!-- {{ teaching.approved_by_faculty }} -->
                                 </div>
                             {% endif %}
                         </td>

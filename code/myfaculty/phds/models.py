@@ -2,6 +2,9 @@ from django.db import models
 from myprofile.models import StaffMember, PhdStudent
 from curricula.models import Course
 from datetime import date
+from jinja2 import Template
+from django.conf import settings
+from mailer.auth.gmail import notify  # In production "mailer.auth.gmail" should be changed to "mailer.gmail"
 
 # Create your models here.
 
@@ -27,6 +30,28 @@ class ConferencePublication(models.Model):
     venue = models.CharField(null=True)
     year = models.IntegerField(null=True)
     has_supervisor = models.BooleanField(null=True)
+
+
+TEACHING_CREATION_NOTIFICATION = """
+Γειά σας! 
+
+Κατατέθηκε ένα νέο Επικουρικό Έργο που αφορά τον/την υποψήφιο/ια Διδάκτορα:
+{{ p.candidate }} και απαιτεί έλεγχο.
+
+Συνδεθείτε στην πλατφόρμα για περισσότερες λεπτομέρειες:
+
+"""
+
+TEACHING_UPDATE_NOTIFICATION = """
+Γειά σας! 
+
+Το Επικουρικό Έργο σας στο μάθημα "{{ p.course }}", 
+και τύπου διδασκαλίας "{{ p.teaching_type }}", 
+εγκρίθηκε.
+
+Συνδεθείτε στην πλατφόρμα για περισσότερες λεπτομέρειες:
+
+"""
 
 class Teaching(models.Model):
 
@@ -63,4 +88,31 @@ class Teaching(models.Model):
         if self.approved_by_faculty == True:
             self.approved_date = date.today()
         
+        new = self.id is None
         super().save(*args, **kwargs)
+
+        if new:
+            self.notify_creation()
+        else:
+            self.notify_update()
+
+    def notification_dict(self):
+        return {
+            'candidate' : self.candidate.display_name,
+            'course' : self.course,
+            'teaching_type' : self.teaching_type
+        }
+    
+    def creation_notification(self):
+        template = Template(TEACHING_CREATION_NOTIFICATION)
+        return template.render({ 'p' : self.notification_dict() })
+    
+    def update_notification(self):
+        template = Template(TEACHING_UPDATE_NOTIFICATION)
+        return template.render({ 'p' : self.notification_dict() })
+    
+    def notify_creation(self):
+        notify(self.faculty.email, 'Δημιουργία Νέου Επικουρικού Έργου', self.creation_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
+
+    def notify_update(self):
+        notify(self.candidate.email, 'Έγκριση Επικουρικού Έργου', self.update_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
