@@ -21,6 +21,9 @@ class JournalPublication(models.Model):
     year = models.IntegerField(null=True)
     doi = models.CharField(null=True)
 
+    def __str__(self):
+        return self.title
+
 class ConferencePublication(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
 
@@ -30,6 +33,9 @@ class ConferencePublication(models.Model):
     venue = models.CharField(null=True)
     year = models.IntegerField(null=True)
     has_supervisor = models.BooleanField(null=True)
+
+    def __str__(self):
+        return self.title
 
 
 TEACHING_CREATION_NOTIFICATION = """
@@ -80,6 +86,9 @@ class Teaching(models.Model):
 
     approved_by_faculty = models.BooleanField(null=True, default=False)
     approved_date = models.DateField(null=True, blank=True)
+
+    def __str__(self):
+        return self.course.title_gr + ' [' + self.course.code_gr + '] : ' + self.teaching_type
 
     def save(self, *args, **kwargs):
         if self.candidate and self.candidate.supervisor:
