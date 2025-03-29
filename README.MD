@@ -1,45 +1,52 @@
-## If the containers' volumes, exist Before building & running the project we should give permissions to data/db
-```bash
-sudo chmod -R 755 ./data/db
-```
+# Project setup guide
 
+## First-time setup
 
-# For the 1st time
-## Starting the project with docker-compose
+### Start the project with Docker Compose:
 ```bash
 docker-compose up --build
 ```
 
+### Post-startup steps (open a second terminal)
 
-## After we have start the project we need to create a superuser for our database (in another terminal)
+#### Create a superuser:
 ```bash
 docker-compose exec web python manage.py createsuperuser
 ```
 
-## If we want to insert data from a file (like .json)
+#### Insert data from a file (e.g. .json):
 ```bash
 docker-compose exec web python manage.py loaddata <datafile>
 ```
 
-## If we want to run any python file while the project is running (for example to set passwords for users)
+#### Run any python script (e.g. setting user passwords):
 ```bash
 docker-compose exec web python <filename>.py
 ```
 
+---
 
-# For the next times 
-## To start the project we can simply run
+## Subsequent runs
+
+### Start the project:
 ```bash
 docker-compose up
 ```
 
-## To delete docker containers and volumes
+### Stop and remove Docker Containers & Volumes:
 ```bash
 docker-compose down --volumes
 ```
 
+### Rebuilding the project will ask for permissions to database
 
-## To delete the database
+#### Give permissions to database:
+```bash
+sudo chmod -R 755 ./data/db
+```
+
+#### Or delete the database:
 ```bash
 sudo rm -r ./data/db
 ```
+
