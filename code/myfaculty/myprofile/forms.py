@@ -210,7 +210,7 @@ SEC_ASSOCIATE_LAYOUT = Layout(
 
 SEC_CREATE_PHD_STUDENT_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               Div(HTML('<h3> Στοιχεία Προφίλ </h3>'),css_class = 'col-md-8'),
                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                css_class="row"),
             Row(
@@ -257,7 +257,7 @@ SEC_CREATE_PHD_STUDENT_LAYOUT = Layout(
 
 SEC_EDIT_PHD_STUDENT_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               Div(HTML('<h3> Στοιχεία Προφίλ </h3>'),css_class = 'col-md-8'),
                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                css_class="row"),
             Row(
@@ -317,7 +317,7 @@ SEC_EDIT_PHD_STUDENT_LAYOUT = Layout(
 
 STAFF_SPECTATE_PHD_STUDENT_LAYOUT = Layout(
             Row(
-               Div(HTML('<h4> Στοιχεία Προφίλ </h4>'),css_class = 'col-md-8'),
+               Div(HTML('<h3> Στοιχεία Προφίλ </h3>'),css_class = 'col-md-8'),
                css_class="row"),
             Row(
                 # Photo Preview (Left Side)

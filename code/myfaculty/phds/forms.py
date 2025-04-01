@@ -42,7 +42,7 @@ LABELS = {
 
 PHD_CREATE_JOURNAL_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Περιοδικού </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -66,7 +66,7 @@ PHD_CREATE_JOURNAL_LAYOUT = Layout(
 
 PHD_SPECTATE_JOURNAL_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Περιοδικού </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('title'),css_class = 'col-md-6'),                
@@ -89,7 +89,7 @@ PHD_SPECTATE_JOURNAL_LAYOUT = Layout(
 
 SEC_CREATE_JOURNAL_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Περιοδικού </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -116,7 +116,7 @@ SEC_CREATE_JOURNAL_LAYOUT = Layout(
 
 SEC_EDIT_JOURNAL_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Περιοδικού </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -143,7 +143,7 @@ SEC_EDIT_JOURNAL_LAYOUT = Layout(
 
 STAFF_SPECTATE_JOURNAL_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Περιοδικού </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Περιοδικού </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('candidate'),css_class = 'col-md-4'),
@@ -172,7 +172,7 @@ STAFF_SPECTATE_JOURNAL_LAYOUT = Layout(
 
 PHD_CREATE_CONFERENCE_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'), css_class='col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Συνεδρίου </h3>'), css_class='col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'), css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -191,7 +191,7 @@ PHD_CREATE_CONFERENCE_LAYOUT = Layout(
 
 PHD_SPECTATE_CONFERENCE_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Συνεδρίου </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('title'), css_class='col-md-6'),
@@ -209,7 +209,7 @@ PHD_SPECTATE_CONFERENCE_LAYOUT = Layout(
 
 SEC_CREATE_CONFERENCE_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Συνεδρίου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -231,7 +231,7 @@ SEC_CREATE_CONFERENCE_LAYOUT = Layout(
 
 SEC_EDIT_CONFERENCE_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Συνεδρίου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -253,7 +253,7 @@ SEC_EDIT_CONFERENCE_LAYOUT = Layout(
 
 STAFF_SPECTATE_CONFERENCE_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Δημοσίευσης Συνεδρίου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Δημοσίευσης Συνεδρίου </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('candidate'),css_class = 'col-md-4'),
@@ -277,7 +277,7 @@ STAFF_SPECTATE_CONFERENCE_LAYOUT = Layout(
 
 PHD_CREATE_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -298,7 +298,7 @@ PHD_CREATE_TEACHING_LAYOUT = Layout(
 
 PHD_SPECTATE_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('faculty'),css_class = 'col-md-4'),
@@ -322,7 +322,7 @@ PHD_SPECTATE_TEACHING_LAYOUT = Layout(
 
 SEC_CREATE_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -348,7 +348,7 @@ SEC_CREATE_TEACHING_LAYOUT = Layout(
 
 SEC_EDIT_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
@@ -374,7 +374,7 @@ SEC_EDIT_TEACHING_LAYOUT = Layout(
 
 STAFF_SPECTATE_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
                 Div(Field('candidate'),css_class = 'col-md-3'),
@@ -399,7 +399,7 @@ STAFF_SPECTATE_TEACHING_LAYOUT = Layout(
 
 STAFF_EDIT_TEACHING_LAYOUT = Layout(
             Row(
-                Div(HTML('<h4> Στοιχεία Επικουρικού Έργου </h4>'),css_class = 'col-md-8'),
+                Div(HTML('<h3> Στοιχεία Επικουρικού Έργου </h3>'),css_class = 'col-md-8'),
                 Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
