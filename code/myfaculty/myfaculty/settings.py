@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 from pathlib import Path
 import ldap
 from django_auth_ldap.config import LDAPSearch
-import os
+import os, json
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -184,7 +184,7 @@ AUTH_LDAP_BIND_PASSWORD = os.environ.get('AUTH_LDAP_BIND_PASSWORD')
 AUTH_LDAP_USER_SEARCH = LDAPSearch(
     "dc=hua,dc=gr", ldap.SCOPE_SUBTREE, "(uid=%(user)s)"
 )
-print(os.environ.items)
+print("\nEnvironment Variables:\n"+json.dumps(dict(os.environ), indent=2)+"\n")
 AUTH_LDAP_USER_ATTR_MAP = {
     "first_name": "givenName",
     "last_name": "sn",

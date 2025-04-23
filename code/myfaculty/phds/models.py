@@ -48,12 +48,23 @@ TEACHING_CREATION_NOTIFICATION = """
 
 """
 
-TEACHING_UPDATE_NOTIFICATION = """
+TEACHING_APPROVED_NOTIFICATION = """
 Γειά σας! 
 
 Το Επικουρικό Έργο σας στο μάθημα "{{ p.course }}", 
 και τύπου διδασκαλίας "{{ p.teaching_type }}", 
 εγκρίθηκε.
+
+Συνδεθείτε στην πλατφόρμα για περισσότερες λεπτομέρειες:
+
+"""
+
+TEACHING_REJECTED_NOTIFICATION = """
+Γειά σας! 
+
+Το Επικουρικό Έργο σας στο μάθημα "{{ p.course }}", 
+και τύπου διδασκαλίας "{{ p.teaching_type }}", 
+απορρίφθηκε.
 
 Συνδεθείτε στην πλατφόρμα για περισσότερες λεπτομέρειες:
 
@@ -84,7 +95,7 @@ class Teaching(models.Model):
     have_contract = models.BooleanField(null=True)
     comments = models.TextField(null=True)
 
-    approved_by_faculty = models.BooleanField(null=True, default=False)
+    approved_by_faculty = models.BooleanField(null=True, default=None)
     approved_date = models.DateField(null=True, blank=True)
 
     def __str__(self):
@@ -102,8 +113,10 @@ class Teaching(models.Model):
 
         if new:
             self.notify_creation()
+        elif self.approved_by_faculty == True:
+            self.notify_approve()
         else:
-            self.notify_update()
+            self.notify_reject()
 
     def notification_dict(self):
         return {
@@ -116,12 +129,20 @@ class Teaching(models.Model):
         template = Template(TEACHING_CREATION_NOTIFICATION)
         return template.render({ 'p' : self.notification_dict() })
     
-    def update_notification(self):
-        template = Template(TEACHING_UPDATE_NOTIFICATION)
+    def approved_notification(self):
+        template = Template(TEACHING_APPROVED_NOTIFICATION)
         return template.render({ 'p' : self.notification_dict() })
+    
+    def rejected_notification(self):
+        template = Template(TEACHING_REJECTED_NOTIFICATION)
+        return template.render({ 'p' : self.notification_dict() })
+    
     
     def notify_creation(self):
         notify(self.faculty.email, 'Δημιουργία Νέου Επικουρικού Έργου', self.creation_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
 
-    def notify_update(self):
-        notify(self.candidate.email, 'Έγκριση Επικουρικού Έργου', self.update_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
+    def notify_approve(self):
+        notify(self.candidate.email, 'Έγκριση Επικουρικού Έργου', self.approved_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
+
+    def notify_reject(self):
+        notify(self.candidate.email, 'Απόρριψη Επικουρικού Έργου', self.rejected_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.

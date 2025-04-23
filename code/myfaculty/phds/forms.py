@@ -674,10 +674,11 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
         if self.instance.faculty:
             self.helper = FormHelper()
 
-            if self.instance.faculty.user == self.user and self.instance.approved_by_faculty == False:
-                self.fields["approved_by_faculty"].disabled = False
-                self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT
+            if self.instance.faculty.user == self.user: 
+                if  self.instance.approved_by_faculty == None:
+                    self.fields["approved_by_faculty"].disabled = False
+                    self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT
 
-            else:    
+            else:
                 self.helper.layout = STAFF_SPECTATE_TEACHING_LAYOUT
                            

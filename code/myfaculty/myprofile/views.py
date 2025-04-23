@@ -30,7 +30,7 @@ def render_anauthorized_staff(request):
 @login_required
 def staff_profile(request):
     profile = StaffMember.objects.get(user = request.user)
-    unchecked_teachings = Teaching.objects.filter(faculty=profile, approved_by_faculty=False).exists()
+    unchecked_teachings = Teaching.objects.filter(faculty=profile, approved_by_faculty=None).exists()
     
     if request.method == 'POST':
         form = StaffFormRestricted(request.POST, instance = profile)
