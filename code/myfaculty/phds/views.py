@@ -140,8 +140,23 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
         return context
 
 
+    # Annual Reports
 
-# staff views --> Staff Members spectate only and accepting/rejecting Teaching --> Only for the PhDs they have.
+class phd_list_reports(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
+    def dummy():
+        return
+
+class phd_create_report(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
+    def dummy():
+        return
+
+class phd_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
+    def dummy():
+        return
+
+
+
+# staff views --> Staff Members spectate only and accepting/rejecting Teachings & register recommendations on Reports --> Only for the PhDs they have, as supervisors.
         
     # Journals
 
@@ -223,6 +238,13 @@ class staff_spectate_teaching_accept_reject_from_list(UserPassesTestMixin, Login
         kwargs["user"] = self.request.user
         return kwargs
     
+    
+    # Annual Reports
+
+class staff_spectate_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
+    def dummy():
+        return
+
 
 
 # sec views --> Secreatary CRUD everything
@@ -381,3 +403,19 @@ def sec_delete_teaching(request, pk):
         return redirect('myprofile:sec_edit_phd_student', pk=candidate.id)
     else:
         return redirect(request.META.get('HTTP_REFERER'))
+    
+
+    # Annual Reports
+
+class sec_create_report(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
+    def dummy():
+        return
+
+class sec_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
+    def dummy():
+        return
+    
+@login_required
+@user_passes_test(is_secreteriat)
+def sec_delete_report(request, pk):
+    return

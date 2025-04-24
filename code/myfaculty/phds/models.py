@@ -1,7 +1,7 @@
 from django.db import models
 from myprofile.models import StaffMember, PhdStudent
 from curricula.models import Course
-from datetime import date
+from datetime import date, datetime
 from jinja2 import Template
 from django.conf import settings
 from mailer.auth.gmail import notify  # In production "mailer.auth.gmail" should be changed to "mailer.gmail"
@@ -85,7 +85,7 @@ class Teaching(models.Model):
     ]
 
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
-    faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
+    faculty = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL)
     course = models.ForeignKey(Course, null=True, on_delete=models.SET_NULL)
     
     year = models.IntegerField(null=True)
@@ -146,3 +146,32 @@ class Teaching(models.Model):
 
     def notify_reject(self):
         notify(self.candidate.email, 'Απόρριψη Επικουρικού Έργου', self.rejected_notification()) # Cc argument may be added in production. Skipped in order not to sending mails in original mailer.
+
+
+class AnnualReport(models.Model):
+
+    SUFFICIENT = "sufficient"
+    INSUFFICIENT = "insufficient"
+    SATISFACTORY = "satisfactory"
+
+    RECOMMENDATIONS = [
+        (SUFFICIENT, "Επαρκής"),
+        (INSUFFICIENT, "Ανεπαρκής"),
+        (SATISFACTORY, "Ικανοποιητική"),
+    ]
+
+    candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
+    faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
+
+    recommendation = models.CharField(null=True, choices=RECOMMENDATIONS, default=None)
+    recommendation_datetime = models.DateTimeField(null=True)
+    
+    report = models.FileField(null=True) 
+    comments = models.TextField(null=True)
+
+    def save(self, *args, **kwargs):
+        if self.candidate and self.candidate.supervisor:
+            self.faculty = self.candidate.supervisor
+        
+        if self.recommendation == None:
+            self.recommendation_datetime = datetime.now()
