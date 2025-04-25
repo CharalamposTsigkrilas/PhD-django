@@ -7,6 +7,50 @@
     {% crispy form %} 
 
     {% if form.instance.pk %}
+        <!-- phd reports -->
+        <script>
+            $(document).ready(function() {
+                $('#annualreport').DataTable({
+                    "lengthChange": false,
+                    "pageLength": 10
+                });
+            });
+        </script>
+        <br><br>
+        <br><br>
+        <div class="row">
+            <div class="col">
+                <h3>Ετήσιες Εκθέσεις</h3>
+            </div>
+            <div class="d-flex justify-content-end">
+                <a href="{% url 'phds:sec_create_report' form.instance.pk %}" class="btn btn-primary">+ Νέα Δημοσίευση</a>
+            </div>
+        </div>
+        {% if reports %}
+            <table id = "annualreport" class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Έκθεση</th>
+                        <th scope="col">Έτος</th>
+                        <th scope="col"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{ report.report }}</td>
+                            <td>{{ report.year }}</td>
+                            <td>
+                                <a href="{% url 'phds:sec_edit_report' report.id %}" type="submit" class="btn btn-primary tablebutton"> Επεξεργασία </a>  
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% else %}
+            <p>Δεν έχουν καταχωρηθεί εκθέσεις</p>
+        {% endif %} 
+
         <!-- phd journals -->
         <script>
             $(document).ready(function() {

@@ -163,11 +163,12 @@ class AnnualReport(models.Model):
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
     faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
 
+    report = models.FileField(null=True) 
+    year = models.IntegerField(null=True)
+    comments = models.TextField(null=True)
+
     recommendation = models.CharField(null=True, choices=RECOMMENDATIONS, default=None)
     recommendation_datetime = models.DateTimeField(null=True)
-    
-    report = models.FileField(null=True) 
-    comments = models.TextField(null=True)
 
     def save(self, *args, **kwargs):
         if self.candidate and self.candidate.supervisor:

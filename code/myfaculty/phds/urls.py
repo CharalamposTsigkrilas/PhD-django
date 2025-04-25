@@ -15,6 +15,10 @@ urlpatterns = [
     path('sec/teaching/<int:pk>/delete', views.sec_delete_teaching, name='sec_delete_teaching'),
     path('sec/phd/<int:pk>/teaching/new', views.sec_create_teaching.as_view(), name='sec_create_teaching'),
 
+    path('sec/report/<int:pk>', views.sec_edit_report.as_view(), name='sec_edit_report'),
+    path('sec/report/<int:pk>/delete', views.sec_delete_report, name='sec_delete_report'),
+    path('sec/phd/<int:pk>/report/new', views.sec_create_report.as_view(), name='sec_create_report'),
+
     
     path('staff/journal/<int:pk>/details', views.staff_spectate_journal.as_view(), name='staff_spectate_journal'),
     
@@ -23,6 +27,8 @@ urlpatterns = [
     path('staff/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject.as_view(), name='staff_spectate_teaching_accept_reject'),
     path('staff/teachings', views.staff_list_teachings.as_view(), name='staff_list_teachings'),
     path('staff/teachings/teaching/<int:pk>/details', views.staff_spectate_teaching_accept_reject_from_list.as_view(), name='staff_spectate_teaching_accept_reject_from_list'),
+
+    path('staff/report/<int:pk>/details', views.staff_spectate_report_recommend.as_view(), name='staff_spectate_report_recommend'),
 
     
     path('phd/journals', views.phd_list_journals.as_view(), name='phd_list_journals'),
@@ -36,4 +42,8 @@ urlpatterns = [
     path('phd/teachings', views.phd_list_teachings.as_view(), name='phd_list_teachings'),
     path('phd/teaching/<int:pk>/details', views.phd_spectate_teaching.as_view(), name='phd_spectate_teaching'),
     path('phd/teaching/new', views.phd_create_teaching.as_view(), name='phd_create_teaching'),
+
+    path('phd/reports', views.phd_list_reports.as_view(), name='phd_list_reports'),
+    path('phd/report/<int:pk>', views.phd_edit_report.as_view(), name='phd_edit_report'),
+    path('phd/report/new', views.phd_create_report.as_view(), name='phd_create_report'),
 ]

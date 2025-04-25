@@ -241,7 +241,7 @@ class staff_spectate_teaching_accept_reject_from_list(UserPassesTestMixin, Login
     
     # Annual Reports
 
-class staff_spectate_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
+class staff_spectate_report_recommend(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
     def dummy():
         return
 

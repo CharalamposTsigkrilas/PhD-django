@@ -1,0 +1,46 @@
+{% extends 'myprofile/page.html' %}
+
+{% block middle %}
+
+    <script>
+        $(document).ready(function() {
+            $('#annualreport').DataTable({
+                "lengthChange": false,
+                "pageLength": 100
+            });
+        });
+    </script>
+    <div class="row">
+        <div class="col">
+            <h3>Ετήσιες Εκθέσεις</h3>
+        </div>
+        <div class="d-flex justify-content-end">
+            <a href="{% url 'phds:phd_create_report' %}" class="btn btn-primary">+ Νέα Έκθεση</a>
+        </div>
+    </div>
+    {% if reports %}
+        <table id = "annualreport" class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Έκθεση</th>
+                    <th scope="col">Έτος</th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for report in reports %}
+                    <tr>
+                        <td>{{ report.report }}</td>
+                        <td>{{ report.year }}</td>
+                        <td>
+                            <a href="{% url 'phds:phd_edit_report' report.id %}" type="submit" class="btn btn-primary tablebutton"> Προβολή </a>  
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p>Δεν έχουν καταχωρηθεί εκθέσεις</p>
+    {% endif %} 
+
+{% endblock %}
