@@ -161,7 +161,7 @@ class AnnualReport(models.Model):
     ]
 
     candidate = models.ForeignKey(PhdStudent, null=True, on_delete=models.SET_NULL)
-    faculty = models.ForeignKey(StaffMember, null=True, blank=True,  on_delete=models.SET_NULL)
+    faculty = models.ForeignKey(StaffMember, null=True, blank=True, on_delete=models.SET_NULL)
 
     report = models.FileField(null=True) 
     year = models.IntegerField(null=True)

@@ -6,12 +6,14 @@ from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
 JOURNAL_FIELDS = ['candidate', 'title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
 CONFERENCE_FIELDS = ['candidate', 'title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
 TEACHING_FIELDS = ['candidate', 'faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
+REPORT__FIELDS = ['candidate', 'faculty', 'report', 'year', 'comments', 'recommendation', 'recommendation_datetime']
 
 PHD_JOURNAL_FIELDS = ['title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
 PHD_CONFERENCE_FIELDS = ['title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
 PHD_CREATE_TEACHING_FIELDS = ['faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments']
 PHD_SPECTATE_TEACHING_FIELDS = ['faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
-
+PHD_CREATE_REPORT_FIELDS = ['faculty', 'report', 'year', 'comments']
+PHD_EDIT_REPORT_FIELDS = ['faculty', 'report', 'year', 'comments', 'recommendation', 'recommendation_datetime']
 
 LABELS = {
     'candidate' : 'Υποψήφιος Διδάκτορας',
@@ -34,7 +36,10 @@ LABELS = {
     'have_contract' : 'Έχει Σύμβαση ο Διδάκτορας;',
     'comments' : 'Σχόλια',
     'approved_by_faculty' : 'Έγκριση',
-    'approved_date' : 'Ημερομηνία Έγκρισης'
+    'approved_date' : 'Ημερομηνία Έγκρισης',
+    'report' : 'Αναφορά (αρχείο .pdf)',
+    'recommendation' : 'Σύσταση Έκθεσης',
+    'recommendation_datetime' : 'Ημερομηνία Σύστασης'
 }
 
 
@@ -423,6 +428,139 @@ STAFF_EDIT_TEACHING_LAYOUT = Layout(
                 css_class="row"),
             )
 
+
+# Annual Report Layouts
+
+PHD_CREATE_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('faculty'),css_class = 'col-md-4'),
+                Div(Field('report'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            )
+
+PHD_EDIT_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('faculty'),css_class = 'col-md-4'),
+                Div(Field('report'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+PHD_SPECTATE_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('faculty'),css_class = 'col-md-4'),
+                Div(Field('report'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+SEC_CREATE_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Δημιουργία'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('report'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+SEC_EDIT_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('report'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+STAFF_EDIT_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                Div(Field('report'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+STAFF_SPECTATE_REPORT_LAYOUT = Layout(
+            Row(
+                Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
+                css_class="row"),
+            Row(
+                Div(Field('candidate'),css_class = 'col-md-4'),
+                Div(Field('report'),css_class = 'col-md-4'),
+                Div(Field('year'),css_class = 'col-md-4'),
+                css_class="row"),
+            Row(
+                Div(Field('comments'),css_class = 'col-md-12'),
+                css_class="row"),
+            Row(
+                Div(Field('recommendation'),css_class = 'col-md-6'),
+                Div(Field('recommendation_datetime'),css_class = 'col-md-6'),
+                css_class="row"),
+            )
+
+
 # Journal Forms 
 class PhdCreateJournalForm(ModelForm):
 
@@ -681,4 +819,26 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
 
             else:
                 self.helper.layout = STAFF_SPECTATE_TEACHING_LAYOUT
-                           
+
+
+# Annual Report Forms
+
+class PhdCreateReportForm(ModelForm):
+    def dummy():
+        return
+
+class PhdEditReportForm(ModelForm):
+    def dummy():
+        return
+
+class SecCreateReportForm(ModelForm):
+    def dummy():
+        return
+
+class SecEditReportForm(ModelForm):
+    def dummy():
+        return
+
+class StaffSpectateReportRecommendFormRestricted(ModelForm):
+    def dummy():
+        return

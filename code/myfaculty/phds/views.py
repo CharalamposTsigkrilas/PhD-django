@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.db.models import Q
-from .models import JournalPublication, ConferencePublication, Teaching
+from .models import JournalPublication, ConferencePublication, Teaching, AnnualReport
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.views import generic
 from myprofile.checks import is_phd_student, is_secreteriat, is_staff_member
@@ -143,16 +143,51 @@ class phd_spectate_teaching(UserPassesTestMixin, LoginRequiredMixin, generic.Det
     # Annual Reports
 
 class phd_list_reports(UserPassesTestMixin, LoginRequiredMixin, generic.ListView):
-    def dummy():
-        return
+    template_name = "phds/phd_list_reports.html"
+    context_object_name = "reports"
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_queryset(self):
+        p = PhdStudent.objects.get(user = self.request.user)
+        return AnnualReport.objects.filter(candidate = p)
 
 class phd_create_report(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
-    def dummy():
-        return
+    model = AnnualReport
+    template_name = "phds/phd_edit_report.html"
+    form_class = PhdCreateReportForm
+    success_url = reverse_lazy('phds:phd_list_reports')
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["candidate"] = PhdStudent.objects.get(user=self.request.user)  # Pass PhD student
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
+        return super().form_valid(form)
 
 class phd_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
-    def dummy():
-        return
+    model = Teaching
+    template_name = "phds/phd_edit_report.html"
+    form_class = PhdEditReportForm
+    success_url = reverse_lazy('phds:phd_list_reports')
+
+    def test_func(self):
+        return is_phd_student(self.request.user)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["candidate"] = PhdStudent.objects.get(user=self.request.user)  # Pass PhD student
+        return kwargs
+
+    def form_valid(self, form):
+        form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
+        return super().form_valid(form)
 
 
 
@@ -242,8 +277,25 @@ class staff_spectate_teaching_accept_reject_from_list(UserPassesTestMixin, Login
     # Annual Reports
 
 class staff_spectate_report_recommend(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
-    def dummy():
-        return
+    model = AnnualReport
+    template_name = "phds/staff_spectate_report_recommend.html"
+    form_class = StaffSpectateReportRecommendFormRestricted
+
+    def test_func(self):
+        return is_staff_member(self.request.user)
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs["user"] = self.request.user
+        return kwargs
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:staff_spectate_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
 
 
 
@@ -408,14 +460,50 @@ def sec_delete_teaching(request, pk):
     # Annual Reports
 
 class sec_create_report(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
-    def dummy():
-        return
+    model = AnnualReport
+    template_name = "phds/sec_edit_report.html"
+    form_class = SecCreateReportForm
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
+        
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        candidate_id = self.kwargs.get("pk")
+        kwargs["candidate"] = get_object_or_404(PhdStudent, id=candidate_id)
+        return kwargs
 
 class sec_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
-    def dummy():
-        return
+    model = AnnualReport
+    template_name = "phds/sec_edit_report.html"
+    form_class = SecEditReportForm
+
+    def test_func(self):
+        return is_secreteriat(self.request.user)
+    
+    def get_success_url(self):
+        candidate = self.object.candidate
+        if candidate:
+            return reverse("myprofile:sec_edit_phd_student", kwargs={"pk": candidate.id})
+        else:
+            previous_url = self.request.META.get("HTTP_REFERER")
+            return previous_url
     
 @login_required
 @user_passes_test(is_secreteriat)
 def sec_delete_report(request, pk):
-    return
+    obj = get_object_or_404(AnnualReport, pk=pk)
+    candidate = obj.candidate    
+    obj.delete()
+    if candidate:
+        return redirect('myprofile:sec_edit_phd_student', pk=candidate.id)
+    else:
+        return redirect(request.META.get('HTTP_REFERER'))
