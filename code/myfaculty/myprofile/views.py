@@ -13,7 +13,7 @@ from django.views import generic
 from dal import autocomplete
 from sis import sis
 from theses.models import Thesis
-from phds.models import JournalPublication, ConferencePublication, Teaching
+from phds.models import JournalPublication, ConferencePublication, Teaching, AnnualReport
 
 # Create your views here.
 
@@ -278,6 +278,7 @@ class sec_edit_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.Upda
         context["journals"] = JournalPublication.objects.filter(candidate=self.object)
         context["conferences"] = ConferencePublication.objects.filter(candidate=self.object)
         context["teachings"] = Teaching.objects.filter(candidate=self.object)
+        context["reports"] = AnnualReport.objects.filter(candidate=self.object)
         return context
 
 class sec_create_phd_student(UserPassesTestMixin, LoginRequiredMixin, generic.CreateView):
@@ -326,4 +327,5 @@ class staff_spectate_phd_student(UserPassesTestMixin, LoginRequiredMixin, generi
         context["journals"] = JournalPublication.objects.filter(candidate=self.object)
         context["conferences"] = ConferencePublication.objects.filter(candidate=self.object)
         context["teachings"] = Teaching.objects.filter(candidate=self.object)
+        context["reports"] = AnnualReport.objects.filter(candidate=self.object)
         return context

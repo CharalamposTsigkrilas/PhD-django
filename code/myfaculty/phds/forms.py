@@ -1,12 +1,12 @@
 from django.forms import ModelForm
-from .models import JournalPublication, ConferencePublication, Teaching
+from .models import JournalPublication, ConferencePublication, Teaching, AnnualReport
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
 
 JOURNAL_FIELDS = ['candidate', 'title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
 CONFERENCE_FIELDS = ['candidate', 'title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
 TEACHING_FIELDS = ['candidate', 'faculty', 'course', 'year', 'teaching_type', 'hours_per_week', 'no_weeks', 'have_contract', 'comments', 'approved_by_faculty', 'approved_date']
-REPORT__FIELDS = ['candidate', 'faculty', 'report', 'year', 'comments', 'recommendation', 'recommendation_datetime']
+REPORT_FIELDS = ['candidate', 'faculty', 'report', 'year', 'comments', 'recommendation', 'recommendation_datetime']
 
 PHD_JOURNAL_FIELDS = ['title', 'authors_list', 'has_supervisor', 'journal', 'publisher', 'volume', 'issue', 'year', 'doi']
 PHD_CONFERENCE_FIELDS = ['title', 'authors_list', 'conference_name', 'venue', 'year', 'has_supervisor']
@@ -529,9 +529,10 @@ STAFF_EDIT_REPORT_LAYOUT = Layout(
                 Div(Submit('submit', 'Ενημέρωση'),css_class='col-md-4 text-end'),
                 css_class="row"),
             Row(
-                Div(Field('candidate'),css_class = 'col-md-4'),
-                Div(Field('report'),css_class = 'col-md-4'),
-                Div(Field('year'),css_class = 'col-md-4'),
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('report'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
                 css_class="row"),
             Row(
                 Div(Field('comments'),css_class = 'col-md-12'),
@@ -547,9 +548,10 @@ STAFF_SPECTATE_REPORT_LAYOUT = Layout(
                 Div(HTML('<h3> Στοιχεία Ετήσιας Έκθεσης </h3>'),css_class = 'col-md-8'),
                 css_class="row"),
             Row(
-                Div(Field('candidate'),css_class = 'col-md-4'),
-                Div(Field('report'),css_class = 'col-md-4'),
-                Div(Field('year'),css_class = 'col-md-4'),
+                Div(Field('candidate'),css_class = 'col-md-3'),
+                Div(Field('faculty'),css_class = 'col-md-3'),
+                Div(Field('report'),css_class = 'col-md-3'),
+                Div(Field('year'),css_class = 'col-md-3'),
                 css_class="row"),
             Row(
                 Div(Field('comments'),css_class = 'col-md-12'),
@@ -816,6 +818,8 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
                 if  self.instance.approved_by_faculty == None:
                     self.fields["approved_by_faculty"].disabled = False
                     self.helper.layout = STAFF_EDIT_TEACHING_LAYOUT
+                else:
+                    self.helper.layout = STAFF_SPECTATE_TEACHING_LAYOUT
 
             else:
                 self.helper.layout = STAFF_SPECTATE_TEACHING_LAYOUT
@@ -824,21 +828,110 @@ class StaffSpectateAcceptRejectTeachingFormRestricted(ModelForm):
 # Annual Report Forms
 
 class PhdCreateReportForm(ModelForm):
-    def dummy():
-        return
+    class Meta:
+        fields = PHD_CREATE_REPORT_FIELDS
+        model = AnnualReport
+        labels = LABELS
+
+    def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper()
+        self.helper.layout = PHD_CREATE_REPORT_LAYOUT
+
+        self.fields["faculty"].disabled = True  
+        if candidate.supervisor:  
+            self.fields["faculty"].initial = candidate.supervisor
 
 class PhdEditReportForm(ModelForm):
-    def dummy():
-        return
+    class Meta:
+        fields = PHD_EDIT_REPORT_FIELDS
+        model = AnnualReport
+        labels = LABELS
+
+    def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
+        super().__init__(*args, **kwargs)
+        
+        self.helper = FormHelper()
+
+        if candidate.supervisor:  
+            self.fields["faculty"].initial = candidate.supervisor
+
+        for k in PHD_EDIT_REPORT_FIELDS:            
+            self.fields[k].disabled = True
+        
+        if self.instance.recommendation == None:
+            self.fields["report"].disabled = False
+            self.fields["year"].disabled = False
+            self.fields["comments"].disabled = False
+
+            self.helper.layout = PHD_EDIT_REPORT_LAYOUT
+
+        else:
+            self.helper.layout = PHD_SPECTATE_REPORT_LAYOUT
 
 class SecCreateReportForm(ModelForm):
-    def dummy():
-        return
+    class Meta:
+        fields = REPORT_FIELDS
+        model = AnnualReport
+        labels = LABELS
+
+    def __init__(self, *args, **kwargs):
+        candidate = kwargs.pop("candidate", None)
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = SEC_CREATE_REPORT_LAYOUT
+
+        self.fields["candidate"].disabled = True  
+        self.fields["faculty"].disabled = True
+        self.fields["recommendation_datetime"].disabled = True
+
+        if candidate:  
+            self.fields["candidate"].initial = candidate
+        if candidate.supervisor:
+            self.fields["faculty"].initial = candidate.supervisor
 
 class SecEditReportForm(ModelForm):
-    def dummy():
-        return
+    class Meta:
+        fields = REPORT_FIELDS
+        model = AnnualReport
+        labels = LABELS
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+
+        self.helper = FormHelper()
+        self.helper.layout = SEC_EDIT_REPORT_LAYOUT
+
+        self.fields["candidate"].disabled = True  
+        self.fields["faculty"].disabled = True
+        self.fields["recommendation_datetime"].disabled = True
 
 class StaffSpectateReportRecommendFormRestricted(ModelForm):
-    def dummy():
-        return
+    class Meta:
+        fields = REPORT_FIELDS
+        model = AnnualReport
+        labels = LABELS
+
+    def __init__(self, *args, **kwargs):
+        self.user = kwargs.pop("user", None)
+        super().__init__(*args, **kwargs)
+
+        for k in REPORT_FIELDS:            
+            self.fields[k].disabled = True
+
+        if self.instance.faculty:
+            self.helper = FormHelper()
+
+            if self.instance.faculty.user == self.user: 
+                if  self.instance.recommendation == None:
+                    self.fields["recommendation"].disabled = False
+                    self.helper.layout = STAFF_EDIT_REPORT_LAYOUT
+                else:
+                    self.helper.layout = STAFF_SPECTATE_REPORT_LAYOUT
+            
+            else:
+                self.helper.layout = STAFF_SPECTATE_REPORT_LAYOUT

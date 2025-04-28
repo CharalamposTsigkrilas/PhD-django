@@ -172,7 +172,7 @@ class phd_create_report(UserPassesTestMixin, LoginRequiredMixin, generic.CreateV
         return super().form_valid(form)
 
 class phd_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateView):
-    model = Teaching
+    model = AnnualReport
     template_name = "phds/phd_edit_report.html"
     form_class = PhdEditReportForm
     success_url = reverse_lazy('phds:phd_list_reports')

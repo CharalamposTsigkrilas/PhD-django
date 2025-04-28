@@ -167,12 +167,14 @@ class AnnualReport(models.Model):
     year = models.IntegerField(null=True)
     comments = models.TextField(null=True)
 
-    recommendation = models.CharField(null=True, choices=RECOMMENDATIONS, default=None)
-    recommendation_datetime = models.DateTimeField(null=True)
+    recommendation = models.CharField(null=True, choices=RECOMMENDATIONS, default=None, blank=True)
+    recommendation_datetime = models.DateTimeField(null=True, blank=True)
 
     def save(self, *args, **kwargs):
         if self.candidate and self.candidate.supervisor:
             self.faculty = self.candidate.supervisor
         
-        if self.recommendation == None:
+        if self.recommendation != None:
             self.recommendation_datetime = datetime.now()
+        
+        super().save(*args, **kwargs)
