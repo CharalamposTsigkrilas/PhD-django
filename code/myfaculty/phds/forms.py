@@ -888,13 +888,14 @@ class PhdEditReportForm(ModelForm):
         labels = LABELS
 
     def __init__(self, *args, **kwargs):
-        candidate = kwargs.pop("candidate", None)
         super().__init__(*args, **kwargs)
         
         self.helper = FormHelper()
 
-        if candidate.supervisor:  
-            self.fields["faculty"].initial = candidate.supervisor
+        self.candidate = self.instance.candidate if self.instance else None
+
+        if self.candidate and self.candidate.supervisor:
+            self.fields["faculty"].initial = self.candidate.supervisor
 
         for k in PHD_EDIT_REPORT_FIELDS:            
             self.fields[k].disabled = True
@@ -908,6 +909,52 @@ class PhdEditReportForm(ModelForm):
 
         else:
             self.helper.layout = PHD_SPECTATE_REPORT_LAYOUT
+    
+    def clean_year(self):
+        year = self.cleaned_data.get('year')
+        if year is None:
+            return year
+        
+        current_year = datetime.now().year
+        
+        # Get minimum year from candidate's inscription date
+        min_year = None
+        if self.candidate and self.candidate.inscription_date:
+            min_year = self.candidate.inscription_date.year
+        
+        if min_year is None:
+            min_year = 2009
+        
+        # Check if year is within valid range
+        if year < min_year or year > current_year + 1:
+            raise ValidationError(f"Το έτος πρέπει να είναι μεταξύ {min_year} - {current_year + 1}!")
+            
+        # Check if report exists for this year and candidate
+        if self.candidate:
+            existing_reports = AnnualReport.objects.filter(candidate=self.candidate, year=year)
+            
+            # Exclude current instance
+            if self.instance and self.instance.pk:
+                existing_reports = existing_reports.exclude(pk=self.instance.pk)
+            
+            if existing_reports.exists():
+                raise ValidationError("Έχετε υποβάλει ήδη έκθεση για αυτό το έτος!")
+                
+        return year
+    
+    def clean_report(self):
+        report = self.cleaned_data.get('report')
+
+        # Return existing report if no new file uploaded
+        if not report and self.instance and self.instance.report:
+            return self.instance.report
+        
+        if report:
+            # Check if file extension is PDF
+            if not report.name.endswith('.pdf'):
+                raise ValidationError("Μόνο αρχεία .pdf επιτρέπονται!")
+                
+        return report
 
 class SecCreateReportForm(ModelForm):
     class Meta:
@@ -978,9 +1025,57 @@ class SecEditReportForm(ModelForm):
         self.helper = FormHelper()
         self.helper.layout = SEC_EDIT_REPORT_LAYOUT
 
+        self.candidate = self.instance.candidate if self.instance else None
+
         self.fields["candidate"].disabled = True  
         self.fields["faculty"].disabled = True
         self.fields["recommendation_datetime"].disabled = True
+    
+    def clean_year(self):
+        year = self.cleaned_data.get('year')
+        if year is None:
+            return year
+        
+        current_year = datetime.now().year
+        
+        # Get minimum year from candidate's inscription date
+        min_year = None
+        if self.candidate and self.candidate.inscription_date:
+            min_year = self.candidate.inscription_date.year
+        
+        if min_year is None:
+            min_year = 2009
+        
+        # Check if year is within valid range
+        if year < min_year or year > current_year + 1:
+            raise ValidationError(f"Το έτος πρέπει να είναι μεταξύ {min_year} - {current_year + 1}!")
+            
+        # Check if report exists for this year and candidate
+        if self.candidate:
+            existing_reports = AnnualReport.objects.filter(candidate=self.candidate, year=year)
+            
+            # Exclude current instance
+            if self.instance and self.instance.pk:
+                existing_reports = existing_reports.exclude(pk=self.instance.pk)
+            
+            if existing_reports.exists():
+                raise ValidationError("Υπάρχει ήδη έκθεση για αυτό το έτος!")
+                
+        return year
+    
+    def clean_report(self):
+        report = self.cleaned_data.get('report')
+
+        # Return existing report if no new file uploaded
+        if not report and self.instance and self.instance.report:
+            return self.instance.report
+        
+        if report:
+            # Check if file extension is PDF
+            if not report.name.endswith('.pdf'):
+                raise ValidationError("Μόνο αρχεία .pdf επιτρέπονται!")
+                
+        return report
 
 class StaffSpectateReportRecommendFormRestricted(ModelForm):
     class Meta:

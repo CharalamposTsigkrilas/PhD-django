@@ -179,11 +179,6 @@ class phd_edit_report(UserPassesTestMixin, LoginRequiredMixin, generic.UpdateVie
 
     def test_func(self):
         return is_phd_student(self.request.user)
-    
-    def get_form_kwargs(self):
-        kwargs = super().get_form_kwargs()
-        kwargs["candidate"] = PhdStudent.objects.get(user=self.request.user)  # Pass PhD student
-        return kwargs
 
     def form_valid(self, form):
         form.instance.candidate = PhdStudent.objects.get(user=self.request.user)
