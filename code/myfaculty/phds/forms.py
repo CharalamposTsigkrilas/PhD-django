@@ -1,4 +1,6 @@
 from django.forms import ModelForm
+from django.core.exceptions import ValidationError
+from datetime import datetime
 from .models import JournalPublication, ConferencePublication, Teaching, AnnualReport
 from crispy_forms.helper import FormHelper
 from crispy_forms.layout import Layout, Submit, Row, Column, Div, Field, HTML
@@ -835,6 +837,7 @@ class PhdCreateReportForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         candidate = kwargs.pop("candidate", None)
+        self.candidate = candidate
         super().__init__(*args, **kwargs)
         
         self.helper = FormHelper()
@@ -843,6 +846,40 @@ class PhdCreateReportForm(ModelForm):
         self.fields["faculty"].disabled = True  
         if candidate.supervisor:  
             self.fields["faculty"].initial = candidate.supervisor
+    
+    def clean_year(self):
+        year = self.cleaned_data.get('year')
+        if year is None:
+            return year
+        
+        current_year = datetime.now().year
+        
+        # Get minimum year from candidate's inscription date
+        min_year = None
+        if self.candidate and self.candidate.inscription_date:
+            min_year = self.candidate.inscription_date.year
+        
+        if min_year is None:
+            min_year = 2009
+        
+        # Check if year is within valid range
+        if year < min_year or year > current_year + 1:
+            raise ValidationError(f"Το έτος πρέπει να είναι μεταξύ {min_year} - {current_year + 1}!")
+            
+        # Check if report exists for this year and candidate
+        if self.candidate and AnnualReport.objects.filter(candidate=self.candidate, year=year).exists():
+            raise ValidationError("Έχετε υποβάλει ήδη έκθεση για αυτό το έτος!")
+            
+        return year
+    
+    def clean_report(self):
+        report = self.cleaned_data.get('report')
+        if report:
+            # Check if file extension is PDF
+            if not report.name.endswith('.pdf'):
+                raise ValidationError("Μόνο αρχεία .pdf επιτρέπονται!")
+                
+        return report
 
 class PhdEditReportForm(ModelForm):
     class Meta:
@@ -880,6 +917,7 @@ class SecCreateReportForm(ModelForm):
 
     def __init__(self, *args, **kwargs):
         candidate = kwargs.pop("candidate", None)
+        self.candidate = candidate
         super().__init__(*args, **kwargs)
 
         self.helper = FormHelper()
@@ -893,6 +931,40 @@ class SecCreateReportForm(ModelForm):
             self.fields["candidate"].initial = candidate
         if candidate.supervisor:
             self.fields["faculty"].initial = candidate.supervisor
+
+    def clean_year(self):
+        year = self.cleaned_data.get('year')
+        if year is None:
+            return year
+        
+        current_year = datetime.now().year
+        
+        # Get minimum year from candidate's inscription date
+        min_year = None
+        if self.candidate and self.candidate.inscription_date:
+            min_year = self.candidate.inscription_date.year
+        
+        if min_year is None:
+            min_year = 2009
+        
+        # Check if year is within valid range
+        if year < min_year or year > current_year + 1:
+            raise ValidationError(f"Το έτος πρέπει να είναι μεταξύ {min_year} - {current_year + 1}!")
+            
+        # Check if report exists for this year and candidate
+        if self.candidate and AnnualReport.objects.filter(candidate=self.candidate, year=year).exists():
+            raise ValidationError("Υπάρχει ήδη έκθεση για αυτό το έτος!")
+            
+        return year
+    
+    def clean_report(self):
+        report = self.cleaned_data.get('report')
+        if report:
+            # Check if file extension is PDF
+            if not report.name.endswith('.pdf'):
+                raise ValidationError("Μόνο αρχεία .pdf επιτρέπονται!")
+                
+        return report
 
 class SecEditReportForm(ModelForm):
     class Meta:
