@@ -49,7 +49,7 @@ The system can be deployed locally for development using **Docker Compose**, wit
 
 ## Setup Guide (Linux recommended)
 
-### 1. Clone or Download as a zip this repository to your machine.
+### 1. Clone or Download as a zip this repository to your machine
 
 ### 2. Create an `.env` environment file
 
@@ -197,7 +197,9 @@ docker-compose exec web python manage.py createsuperuser
 
 #### (Optional) Load initial data from a .json file
 
-Create a file named `default.json` in `code/myfaculty/`. Replace `<>` with your file:
+Create a file named `default.json` in `code/myfaculty/`.
+
+#### Run it with:
 
 ```bash
 docker-compose exec web python manage.py loaddata default.json
