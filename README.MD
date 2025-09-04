@@ -129,7 +129,7 @@ class gmailapi:
             message['Cc'] = cc
         body += '\n'
         body += settings.EMAIL_PLATFORM_URL
-        
+
         message.set_content( body )
         return message
 
@@ -137,7 +137,7 @@ class gmailapi:
         encoded_message = base64.urlsafe_b64encode(message.as_bytes()).decode()
         create_message = {
             'message': {
-                'raw': encoded_message   
+                'raw': encoded_message
             }
         }
         draft = self.service.users().drafts().create(userId = "me",
@@ -175,19 +175,27 @@ def notify(to, subject, body, cc=None, attachments=[]):
 
 The `.env` file and the `auth` folder must remain local. They are excluded from version control (GitHub/GitLab).
 
+---
+
 ## Installation & Usage
 
-### First-time setup
+### Start the project
 
-#### Build and start the containers:
+#### First-time build and start the containers:
 
 ```bash
 docker-compose up --build
 ```
 
+#### On subsequent runs just start the containers:
+
+```bash
+docker-compose up
+```
+
 ---
 
-### Post-startup (open a new terminal)
+### Post-startup (use an idle terminal)
 
 #### Create a superuser:
 
@@ -238,12 +246,12 @@ The `default.json` and `initialization.py` files are excluded from version contr
 
 ---
 
-### Subsequent runs
+### Stop the project
 
-#### Start the project:
+#### Stop containers:
 
 ```bash
-docker-compose up
+docker-compose down
 ```
 
 #### Stop and remove containers & volumes:
@@ -251,6 +259,10 @@ docker-compose up
 ```bash
 docker-compose down --volumes
 ```
+
+---
+
+### Rebuilding the project
 
 #### Fix database permissions if needed:
 
@@ -264,11 +276,16 @@ sudo chmod -R 755 ./data/db
 sudo rm -r ./data/db
 ```
 
+---
+
 ## Credits
 
-**Contributors**: 
+**Contributors**:
+
 - Tsigkrilas Charalampos, Student of DIT HUA
 - Thomas Kamalakis, Dean of DIT HUA
+
+---
 
 ## References
 
