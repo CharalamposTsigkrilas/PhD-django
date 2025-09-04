@@ -266,7 +266,9 @@ sudo rm -r ./data/db
 
 ## Credits
 
-**Contributors**: Tsigkrilas Charalampos, Department of Informatics and Telematics, Harokopio University of Athens (DIT HUA)
+**Contributors**: 
+- Tsigkrilas Charalampos, Student of DIT HUA
+- Thomas Kamalakis, Dean of DIT HUA
 
 ## References
 
