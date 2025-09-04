@@ -246,7 +246,7 @@ The `default.json` and `initialization.py` files are excluded from version contr
 
 ---
 
-### Stop the project
+### Stop the project (use an idle terminal)
 
 #### Stop containers:
 
