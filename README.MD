@@ -59,9 +59,11 @@ In the project root directory, create an `.env` file and add the following envir
 POSTGRES_DB=<db_name>
 POSTGRES_USER=<db_user_name>
 POSTGRES_PASSWORD=<db_user_password>
+
 AUTH_LDAP_SERVER_URI=<server_uri>
 AUTH_LDAP_BIND_DN=<bind_dn>
 AUTH_LDAP_BIND_PASSWORD=<bind_password>
+
 STUD_IP=<ip>
 STUD_USER=<user>
 STUD_PASSWORD=<password>
@@ -243,6 +245,16 @@ docker-compose exec web python initialization.py
 #### Note!
 
 The `default.json` and `initialization.py` files are excluded from version control (GitHub/GitLab).
+
+---
+
+### Open the App
+
+After the project has been built and started successfully, the application’s UI is available.
+
+> To use the system’s functionalities, make sure at least one user or superuser (admin) has been created.
+
+The app runs at [http://localhost:30082](http://localhost:30082).
 
 ---
 
